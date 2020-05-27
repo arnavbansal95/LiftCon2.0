@@ -29,7 +29,7 @@ void InitInputs()
 
 uint8_t ReadInput(int Input)
 {
-    uint8_t ret = 0;
+    uint8_t ret = DEFAULT;
     if(Input <= 53)
     {
         ret = digitalRead(Input);

@@ -3,6 +3,8 @@
 #ifndef INPUTS_H_
 #define INPUTS_H_
 
+#define DEFAULT     128     // Default Value for ReadInput
+
 // Analong Input (To be made into Digital Output)
 #define INPUT_DLS   A0      // Door Limit Switch
 #define INPUT_FL0   A1      // Floor Limit Switch 0
