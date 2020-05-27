@@ -26,3 +26,9 @@ void InitInputs()
     pinMode(INPUT_SP1, INPUT);
     pinMode(INPUT_VSP, INPUT);
 }
+
+uint8_t ReadInput(int Input)
+{
+    Serial.println(Input);
+    return 0;
+}
