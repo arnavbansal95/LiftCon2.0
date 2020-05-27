@@ -36,7 +36,14 @@ uint8_t ReadInput(int Input)
     }
     if((Input >= 54) && (Input <= 69))
     {
-        ret = analogRead(Input);
+        if(analogRead(Input) > 200)
+        {
+            ret = HIGH;
+        }
+        else
+        {
+            ret = LOW;
+        }
     } 
     return ret;
 }
