@@ -29,6 +29,14 @@ void InitInputs()
 
 uint8_t ReadInput(int Input)
 {
-    Serial.println(Input);
-    return 0;
+    uint8_t ret = 0;
+    if(Input <= 53)
+    {
+        ret = digitalRead(Input);
+    }
+    if((Input >= 54) && (Input <= 69))
+    {
+        ret = analogRead(Input);
+    } 
+    return ret;
 }

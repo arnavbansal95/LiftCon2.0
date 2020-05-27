@@ -16,7 +16,7 @@ void setup()
 void loop() 
 {
   // put your main code here, to run repeatedly:
-  ReadInput(INPUT_DLS);
-  ReadInput(INPUT_FL0);
+  Serial.println(ReadInput(INPUT_DLS));
+  Serial.println(ReadInput(INPUT_FL0));
   delay(1000);
 }
