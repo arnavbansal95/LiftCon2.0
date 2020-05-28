@@ -16,11 +16,20 @@ void setup()
 void loop() 
 {
   // put your main code here, to run repeatedly:
-  Serial.println(ReadInput(INPUT_DLS));
-  Serial.println(ReadInput(INPUT_FL0));
-  Serial.println(ReadInput(INPUT_FL1));
-  Serial.println(ReadInput(INPUT_FL2));
-  Serial.println(ReadInput(INPUT_FL3));
-  Serial.println("========");
-  delay(1000);
+  for(int i=54;i<70;i++)
+  {
+    if(ReadInput(i) == LOW)
+    {
+      Serial.println(i);
+      delay(200);
+    }
+  } 
+  for(int i=37;i<50;i+=2)
+  {
+    if(ReadInput(i) == LOW)
+    {
+      Serial.println(i);
+      delay(200);
+    }
+  }
 }
