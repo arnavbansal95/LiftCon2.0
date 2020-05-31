@@ -22,7 +22,7 @@ void loop()
     if(ReadInput(i) == LOW)
     {
       Serial.println(i);
-      if((i < 65) && (i % 2 != 0))
+      if((i < 65) && (i % 2 == 0))
       {
         digitalWrite(i-31, HIGH);
       }
