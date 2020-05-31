@@ -17,7 +17,14 @@ void setup()
 void loop() 
 {
   // put your main code here, to run repeatedly:
-  Serial.println("Writing A");
+  
+  /* Serial.println("Writing A");
   SendData("A", MB_1);
-  delay(100);
+  delay(100); */
+  
+  char ch = ReceiveData(MB_1); 
+  if(ch != NULL)
+  {
+    Serial.println(ch);
+  }
 }
