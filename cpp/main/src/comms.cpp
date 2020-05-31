@@ -1,6 +1,6 @@
 #include "comms.h"
 
-void InitComms(bool MB1 = true, bool MB2 = true, bool Wifi = true)
+void InitComms(bool MB1 = true, bool MB2 = true, bool Wifi = true, bool DBG = true)
 {
     if(MB1 == true)
     {
@@ -11,5 +11,9 @@ void InitComms(bool MB1 = true, bool MB2 = true, bool Wifi = true)
     {
         digitalWrite(MAX485_2_EN, HIGH);
         Serial2.begin(9600);
+    }
+    if(DBG == true)
+    {
+        Serial.begin(9600);
     }
 }

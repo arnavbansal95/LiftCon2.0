@@ -12,8 +12,7 @@ void setup()
   InitComms();
   InitInputs();
   InitOutputs();
-  Serial.begin(9600);
-}
+  }
 
 void loop() 
 {
