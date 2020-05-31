@@ -27,13 +27,17 @@ void SendData(char payload, uint8_t device = 0)
         if(device == MB_1)
         {
             digitalWrite(MAX485_1_EN, HIGH);
+            delay(5);
             Serial2.write(payload);
+            Serial2.flush();
             digitalWrite(MAX485_1_EN, LOW);
         }
         if(device == MB_2)
         {
             digitalWrite(MAX485_2_EN, HIGH);
+            delay(5);
             Serial3.write(payload);
+            Serial3.flush();
             digitalWrite(MAX485_2_EN, LOW);
         }
     }
