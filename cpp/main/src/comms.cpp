@@ -24,17 +24,17 @@ void SendData(char payload, uint8_t device = 0)
 {
     if(device != 0)
     {
-        if(device == MB1)
+        if(device == MB_1)
         {
             digitalWrite(MAX485_1_EN, HIGH);
             Serial2.write(payload);
             digitalWrite(MAX485_1_EN, LOW);
         }
-        if(device == MB2)
+        if(device == MB_2)
         {
             digitalWrite(MAX485_2_EN, HIGH);
             Serial3.write(payload);
-            digitalWrite(MAX485_3_EN, LOW);
+            digitalWrite(MAX485_2_EN, LOW);
         }
     }
 }
@@ -43,7 +43,7 @@ char ReceiveData(uint8_t device = 0)
 {
     if(device != 0)
     {
-        if(device == MB1)
+        if(device == MB_1)
         {
             digitalWrite(MAX485_1_EN, LOW);
             if(Serial2.available() > 0)
@@ -55,7 +55,7 @@ char ReceiveData(uint8_t device = 0)
                 return(NULL);
             }
         }
-        if(device == MB2)
+        if(device == MB_2)
         {
             digitalWrite(MAX485_2_EN, LOW);
             if(Serial2.available() > 0)

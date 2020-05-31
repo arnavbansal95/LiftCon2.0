@@ -4,10 +4,10 @@
 #define COMMS_H_
 
 // Device Names
-#define MB1 1
-#define MB2 2
-#define WFI 3
-#define DBG 4
+#define MB_1 1
+#define MB_2 2
+#define W_FI 3
+#define D_BG 4
 
 // MODBUS Channels
 // Serial2
