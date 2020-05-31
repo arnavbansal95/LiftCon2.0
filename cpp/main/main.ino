@@ -4,10 +4,12 @@
 
 #include "src/outputs.h"
 #include "src/inputs.h"
+#include "src/comms.h"
 
 void setup() 
 {
   // put your setup code here, to run once:
+  InitComms();
   InitInputs();
   InitOutputs();
   Serial.begin(9600);

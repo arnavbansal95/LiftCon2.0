@@ -1,3 +1,5 @@
+#include "Arduino.h"
+
 #ifndef COMMS_H_
 #define COMMS_H_
 
@@ -14,5 +16,7 @@
 // WiFi Channels
 #define ESP8266_RX  35 // (RX -> TX of Arduino)
 #define ESP8266_TX  34 // (TX -> RX of Arduino)
+
+void InitComms(bool MB1 = true, bool MB2 = true, bool Wifi = true); 
 
 #endif
