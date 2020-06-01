@@ -12,6 +12,7 @@ void setup()
   InitOutputs();
   InitLCD();
   Serial.println("===============================");
+  Serial.println("     System:   Initialized     ");
   runner.init();
   Serial.println("  Scheduler:   Initialized     ");
   runner.addTask(SplashScreenTask);
@@ -25,14 +26,4 @@ void loop()
 {
   // put your main code here, to run repeatedly:
   runner.execute();
-   
-  /* Serial.println("Writing A");
-  SendData("A", MB_2);
-  delay(100); */
-  
-  /* char ch = ReceiveData(MB_2); 
-  if(ch != NULL)
-  {
-    Serial.println(ch);
-  } */
 }
