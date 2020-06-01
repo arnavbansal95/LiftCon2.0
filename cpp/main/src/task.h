@@ -1,7 +1,7 @@
-#include "src/outputs.h"
-#include "src/inputs.h"
-#include "src/comms.h"
-#include "lib/TaskScheduler/src/TaskScheduler.h"
+#include "TaskScheduler.h"
+#include "outputs.h"
+#include "inputs.h"
+#include "comms.h"
 
 #ifndef TASK_H_
 #define TASK_H_
