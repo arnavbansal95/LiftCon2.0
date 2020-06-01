@@ -33,6 +33,9 @@ void InitLCD()
     {
         LCD.setHiColorByRGB(255,255,255);
     }
-    LCD.setFont(u8g_font_unifont);
+    LCD.setFont(u8g_font_6x10);
+    LCD.setFontRefHeightExtendedText();
+    LCD.setDefaultForegroundColor();
+    LCD.setFontPosTop();
     LCD.drawStr( 0, 22, "ARNAV BANSAL");
 }
