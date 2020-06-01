@@ -2,7 +2,6 @@
 // Version 2.0
 // Developed by - Arnav Bansal
 
-#include "U8glib.h"
 #include "src/outputs.h"
 #include "src/inputs.h"
 #include "src/comms.h"
