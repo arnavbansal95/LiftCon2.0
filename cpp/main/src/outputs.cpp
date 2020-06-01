@@ -34,8 +34,5 @@ void InitLCD()
         LCD.setHiColorByRGB(255,255,255);
     }
     LCD.setFont(u8g_font_unifont);
-    Serial.println("Printing on LCD");
-    LCD.drawStr( 0, 20, "ARNAV BANSAL");
-    delay(2000);
-    Serial.println("Done");
+    LCD.drawStr( 0, 22, "ARNAV BANSAL");
 }
