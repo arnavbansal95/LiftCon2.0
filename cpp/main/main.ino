@@ -2,17 +2,12 @@
 // Version 2.0
 // Developed by - Arnav Bansal
 
-#include "src/outputs.h"
-#include "src/inputs.h"
-#include "src/comms.h"
+#include "src/task.h"
 
 void setup() 
 {
   // put your setup code here, to run once:
-  InitComms();
-  InitInputs();
-  InitOutputs();
-  InitLCD();
+  InitSystem();
 }
 
 void loop() 
@@ -22,10 +17,10 @@ void loop()
   /* Serial.println("Writing A");
   SendData("A", MB_2);
   delay(100); */
-  SplashScreen();
-  char ch = ReceiveData(MB_2); 
+  
+  /* char ch = ReceiveData(MB_2); 
   if(ch != NULL)
   {
     Serial.println(ch);
-  }
+  } */
 }

@@ -26,6 +26,9 @@ void SplashScreen()
     u8g.firstPage();  
     do 
     {
-        u8g.drawStr(0, 22, "ARNAV BANSAL");    
+        u8g.drawFrame(0, 0, 128, 64);
+        u8g.drawStr(10, 10, "Lift Controller 2.0");
+        u8g.drawStr(10, 25, "Designed in Austria");
+        u8g.drawStr(10, 40, "   Made in India   ");     
     } while(u8g.nextPage());
 }
