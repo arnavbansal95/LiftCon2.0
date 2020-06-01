@@ -17,25 +17,25 @@ void InitOutputs()
 void InitLCD()
 {
     // assign default color value
-    if(LCD.getMode() == U8G_MODE_R3G3B2) 
+    if(u8g.getMode() == U8G_MODE_R3G3B2) 
     {
-        LCD.setColorIndex(255);     // white
+        u8g.setColorIndex(255);     // white
     }
-    else if(LCD.getMode() == U8G_MODE_GRAY2BIT) 
+    else if(u8g.getMode() == U8G_MODE_GRAY2BIT) 
     {
-        LCD.setColorIndex(3);         // max intensity
+        u8g.setColorIndex(3);         // max intensity
     }
-    else if(LCD.getMode() == U8G_MODE_BW) 
+    else if(u8g.getMode() == U8G_MODE_BW) 
     {
-        LCD.setColorIndex(1);         // pixel on
+        u8g.setColorIndex(1);         // pixel on
     }
-    else if(LCD.getMode() == U8G_MODE_HICOLOR) 
+    else if(u8g.getMode() == U8G_MODE_HICOLOR) 
     {
-        LCD.setHiColorByRGB(255,255,255);
+        u8g.setHiColorByRGB(255,255,255);
     }
-    LCD.setFont(u8g_font_6x10);
-    LCD.setFontRefHeightExtendedText();
-    LCD.setDefaultForegroundColor();
-    LCD.setFontPosTop();
-    LCD.drawStr( 0, 22, "ARNAV BANSAL");
+    u8g.setFont(u8g_font_6x10);
+    u8g.setFontRefHeightExtendedText();
+    u8g.setDefaultForegroundColor();
+    u8g.setFontPosTop();
+    u8g.drawStr( 0, 22, "ARNAV BANSAL");
 }
