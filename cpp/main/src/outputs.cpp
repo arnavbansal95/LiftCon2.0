@@ -16,7 +16,23 @@ void InitOutputs()
 
 void InitLCD()
 {
+    // assign default color value
+    if(LCD.getMode() == U8G_MODE_R3G3B2) 
+    {
+        LCD.setColorIndex(255);     // white
+    }
+    else if(LCD.getMode() == U8G_MODE_GRAY2BIT) 
+    {
+        LCD.setColorIndex(3);         // max intensity
+    }
+    else if(LCD.getMode() == U8G_MODE_BW) 
+    {
+        LCD.setColorIndex(1);         // pixel on
+    }
+    else if(LCD.getMode() == U8G_MODE_HICOLOR) 
+    {
+        LCD.setHiColorByRGB(255,255,255);
+    }
     LCD.setFont(u8g_font_unifont);
-    LCD.setColorIndex(1); // Instructs the display to draw with a pixel on.
     LCD.drawStr( 0, 20, "ARNAV BANSAL");
 }
