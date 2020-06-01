@@ -1,5 +1,4 @@
 #include "Arduino.h"
-#include "U8glib.h"
 
 #ifndef OUTPUTS_H_
 #define OUTPUTS_H_
