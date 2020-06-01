@@ -17,10 +17,7 @@ void InitOutputs()
 void InitLCD()
 {
     // assign default color value
-    u8g.firstPage();
-    u8g.setFont(u8g_font_6x10);
-    u8g.setFontRefHeightExtendedText();
-    u8g.setDefaultForegroundColor();
-    u8g.setFontPosTop();
+    u8g.begin();
+    u8g.setFont(u8g_font_unifont);
     u8g.drawStr( 0, 22, "ARNAV BANSAL");
 }
