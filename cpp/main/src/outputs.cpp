@@ -18,7 +18,7 @@ void InitLCD()
 {
     // assign default color value
     u8g.begin();
-    u8g.setFont(u8g_font_unifont);
+    u8g.setFont(u8g_font_helvB10);
 }
 
 void SplashScreen()
