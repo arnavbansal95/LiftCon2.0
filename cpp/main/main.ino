@@ -7,13 +7,25 @@
 void setup() 
 {
   // put your setup code here, to run once:
-  InitSystem();
+  InitComms();
+  InitInputs();
+  InitOutputs();
+  InitLCD();
+  Serial.println("===============================");
+  runner.init();
+  Serial.println("  Scheduler:   Initialized     ");
+  runner.addTask(SplashScreenTask);
+  Serial.println("      Tasks:   Added           ");
+  SplashScreenTask.enable();
+  Serial.println("      Tasks:   Enabled         ");
+  Serial.println("===============================");
 }
 
 void loop() 
 {
   // put your main code here, to run repeatedly:
-  
+  runner.execute();
+   
   /* Serial.println("Writing A");
   SendData("A", MB_2);
   delay(100); */
