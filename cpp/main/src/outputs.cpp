@@ -28,8 +28,9 @@ void SplashScreen()
     {
         u8g.drawFrame(0, 0, 128, 64);
         u8g.drawFrame(1, 1, 126, 62);
-        u8g.drawStr(6, 20, "Lift Controller 2.0");
-        u8g.drawStr(6, 35, "Designed in Austria");
-        u8g.drawStr(8, 50, "   Made in India   ");     
+        u8g.drawStr(4, 15, "Lift Controller 2.0");
+        u8g.drawStr(6, 30, "    Designed in    ");
+        u8g.drawStr(10, 45, "       Austria    ");
+        u8g.drawStr(4, 60, "   Made in India   ");     
     } while(u8g.nextPage());
 }
