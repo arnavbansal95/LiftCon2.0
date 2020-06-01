@@ -22,7 +22,7 @@ void loop()
   /* Serial.println("Writing A");
   SendData("A", MB_2);
   delay(100); */
-  
+  SplashScreen();
   char ch = ReceiveData(MB_2); 
   if(ch != NULL)
   {

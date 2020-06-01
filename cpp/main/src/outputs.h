@@ -34,5 +34,6 @@ static U8GLIB_ST7920_128X64_1X u8g(GR_LCD_E, GR_LCD_RW, GR_LCD_RS);
 
 void InitOutputs(void);              // Initialize Outputs
 void InitLCD(void);                  // Initialize LCD
+void SplashScreen(void);             // Test LCD
 
 #endif
