@@ -12,7 +12,8 @@ void setup()
   InitComms();
   InitInputs();
   InitOutputs();
-  }
+  InitLCD();
+}
 
 void loop() 
 {

@@ -1,4 +1,5 @@
 #include "Arduino.h"
+#include "lib/LCDLib/src/U8glib.h"
 
 #ifndef OUTPUTS_H_
 #define OUTPUTS_H_
@@ -29,7 +30,9 @@
 #define GR_LCD_RS  53
 #define GR_LCD_RW  51
 #define GR_LCD_E   52
+static U8GLIB_ST7920_128X64 LCD(GR_LCD_E, GR_LCD_RW, GR_LCD_RS, U8G_PIN_NONE);
 
 void InitOutputs(void);              // Initialize Outputs
+void InitLCD(void);                  // Initialize LCD
 
 #endif
