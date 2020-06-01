@@ -18,7 +18,7 @@ void InitLCD()
 {
     // assign default color value
     u8g.begin();
-    u8g.setFont(u8g_font_helvB10);
+    u8g.setFont(u8g_font_helvB08);
 }
 
 void SplashScreen()
@@ -27,8 +27,10 @@ void SplashScreen()
     do 
     {
         u8g.drawFrame(0, 0, 128, 64);
-        u8g.drawStr(10, 10, "Lift Controller 2.0");
-        u8g.drawStr(10, 25, "Designed in Austria");
-        u8g.drawStr(10, 40, "   Made in India   ");     
+        u8g.drawFrame(1, 1, 127, 63);
+        u8g.drawFrame(2, 2, 126, 62);
+        u8g.drawStr(8, 20, "Lift Controller 2.0");
+        u8g.drawStr(8, 25, "Designed in Austria");
+        u8g.drawStr(8, 50, "   Made in India   ");     
     } while(u8g.nextPage());
 }
