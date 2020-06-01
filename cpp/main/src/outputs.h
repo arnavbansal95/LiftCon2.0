@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "lib/LCDLib/src/U8glib.h"
+#include "U8glib.h"
 
 #ifndef OUTPUTS_H_
 #define OUTPUTS_H_
