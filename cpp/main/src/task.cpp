@@ -1,18 +1,19 @@
 #include "task.h"
 
-int taskVar_mode = 0;                               // mode = 0: Auto Mode, mode = 1: Manual Mode, mode = 3: Reset
+int taskVar_mode = -1;                              // mode = 0: Auto Mode, 
+                                                    // mode = 1: Manual Mode, 
+                                                    // mode = 2: Reset, 
+                                                    // mode = -1: Start State
 unsigned long previousMillis[2] = {0, 0};           // will store last time 
 unsigned long currentMillis[2] = {0, 0};            // will store current time
 const long interval = 5000;                         // interval
 
 void CheckInterrupt(void)
 {
-    if (CheckInterruptTask.isFirstIteration())
+    if(taskVar_mode == -1)
     {
-        if(taskVar_mode == 0)
-        {
-            Serial.println("     Service Mode Activated    ");    
-        }
+        Serial.println("     Service Mode Activated    ");
+        taskVar_mode = 0;    
     }
     if(taskVar_mode == 0)
     {   
