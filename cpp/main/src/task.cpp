@@ -18,7 +18,7 @@ void CheckInterrupt(void)
     if(taskVar_mode == 0)
     {   
         currentMillis[0] = millis();
-        if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
+        if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW) || (ReadInput(INPUT_RST) == LOW))
         {
             if (currentMillis[0] - previousMillis[0] >= interval) 
             {
@@ -39,7 +39,7 @@ void CheckInterrupt(void)
     }
     if(taskVar_mode == 1)
     {
-        if(((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW)) || (ReadInput(INPUT_RST) == LOW))
+        if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
         {
             if (currentMillis[1] - previousMillis[1] >= interval) 
             {
