@@ -43,10 +43,16 @@ void ManualOperation(void)
         }
         else
         {
-            digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_BUP));
-            digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_BDN));
+            if((ReadInput(INPUT_BUP) == LOW) || (ReadInput(INPUT_BDN) == LOW))
+            {
+                delay(200);
+                if((ReadInput(INPUT_BUP) == LOW) || (ReadInput(INPUT_BDN) == LOW))
+                {
+                    digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_BUP));
+                    digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_BDN));
+                }
+            }
         }
-        
     }
     if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
     {
