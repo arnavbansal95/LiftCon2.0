@@ -25,13 +25,14 @@ void CheckInterrupt(void)
                 previousMillis[0] = currentMillis[0];
                 if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
                 {
-                    Serial.println("Maintenance Mode Activated");
+                    Serial.println("   Maintenance Mode Activated  ");
                     while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
                     taskVar_mode = 1;
                 }
                 if((ReadInput(INPUT_RST) == LOW) && (taskVar_mode == 0))
                 {
-                    Serial.println("Reset Mode Activated");
+                    Serial.println("       Reset Mode Activated    ");
+                    while(ReadInput(INPUT_RST) == LOW);
                     taskVar_mode = 2;
                 }
             }
@@ -46,7 +47,7 @@ void CheckInterrupt(void)
                 previousMillis[1] = currentMillis[1];
                 if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
                 {
-                    Serial.println("Service Mode Activated");
+                    Serial.println("     Service Mode Activated    ");
                     while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
                     taskVar_mode = 0;
                 }
@@ -88,6 +89,7 @@ void LiftOperation(void)
         {
             digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
         } while(ReadInput(INPUT_FL0) == LOW);
+        Serial.println("     Service Mode Activated    ");
         taskVar_mode = 1;
     }    
 }
