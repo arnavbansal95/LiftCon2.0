@@ -58,11 +58,10 @@ void CheckInterrupt(void)
                     taskVar_mode = 0;
                 }
             }
-            else
-            {
-                previousMillis[1] = millis();
-            }
-            
+        }
+        else
+        {
+            previousMillis[1] = millis();
         }
     }
 }
