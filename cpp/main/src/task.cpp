@@ -31,8 +31,11 @@ void CheckInterrupt(void)
                 }
                 if((ReadInput(INPUT_RST) == LOW) && (taskVar_mode == 0))
                 {
-                    Serial.println("       Reset Mode Activated    ");
-                    taskVar_mode = 2;
+                    if((ReadInput(INPUT_FL0) == LOW) && (ReadInput(INPUT_FL1) == LOW) && (ReadInput(INPUT_FL2) == LOW) && (ReadInput(INPUT_FL3) == LOW))
+                    {
+                        Serial.println("       Reset Mode Activated    ");
+                        taskVar_mode = 2;
+                    }
                 }
             }
         }
