@@ -23,7 +23,6 @@ void setup()
   Serial.println("      Tasks:   Added           ");
   SplashScreenTask.enable();
   CheckUPDownManualTask.enable();
-  ManualOperationTask.enable();
   Serial.println("      Tasks:   Enabled         ");
   Serial.println("===============================");
 }
