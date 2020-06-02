@@ -14,6 +14,7 @@ void CheckUPDownManual(void)
                 taskVar_mode = 1;
                 Serial.println("Manual Mode Activated");
                 ManualOperationTask.enable();
+                delay(2000);
             }
         }
     }
@@ -27,6 +28,7 @@ void CheckUPDownManual(void)
                 taskVar_mode = 0;
                 Serial.println("Auto Mode Activated");
                 ManualOperationTask.disable();
+                delay(2000);
             }
         }
     }
@@ -34,9 +36,9 @@ void CheckUPDownManual(void)
 
 void ManualOperation(void)
 {
+    Serial.println("Manual Mode");
     if(taskVar_mode == 1)
     {
-        Serial.println("Manual Mode");
         if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
         {
             digitalWrite(OUTPUT2_UPM, LOW);
