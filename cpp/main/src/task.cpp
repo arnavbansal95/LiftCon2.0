@@ -45,12 +45,21 @@ void ManualOperation(void)
         {
             if((ReadInput(INPUT_BUP) == LOW) || (ReadInput(INPUT_BDN) == LOW))
             {
-                delay(200);
-                if((ReadInput(INPUT_BUP) == LOW) || (ReadInput(INPUT_BDN) == LOW))
+                delay(100);
+                if(ReadInput(INPUT_BUP) == LOW)
+                {
+                    digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_BUP));
+                }
+                else if(ReadInput(INPUT_BDN) == LOW)
+                {
+                    digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_BDN));
+                }
+                else
                 {
                     digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_BUP));
                     digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_BDN));
                 }
+                
             }
         }
     }
