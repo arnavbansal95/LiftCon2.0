@@ -1,11 +1,11 @@
 #include "task.h"
 
-int taskVar_mode = 0;                               // mode = 0: Auto Mode, mode = 1: Manual Mode
+int taskVar_mode = 0;                               // mode = 0: Auto Mode, mode = 1: Manual Mode, mode = 3: Reset
 unsigned long previousMillis[2] = {0, 0};           // will store last time 
-unsigned long currentMillis[2] = {0, 0}             // will store current time
+unsigned long currentMillis[2] = {0, 0};            // will store current time
 const long interval = 5000;                         // interval
 
-void CheckUPDownManual(void)
+void CheckInterrupt(void)
 {
     if(taskVar_mode == 0)
     {   
@@ -26,7 +26,7 @@ void CheckUPDownManual(void)
     }
     if(taskVar_mode == 1)
     {
-        if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
+        if(((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW)) || (ReadInput(INPUT_RST) == LOW))
         {
             if (currentMillis[1] - previousMillis[1] >= interval) 
             {
@@ -37,14 +37,20 @@ void CheckUPDownManual(void)
                     while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
                     taskVar_mode = 0;
                 }
+                if(ReadInput(INPUT_RST) == LOW)
+                {
+                    Serial.println("Reset Mode Activated");
+                    taskVar_mode = 2;
+                }
             }
         }
     }
 }
 
-void ManualOperation(void)
+void LiftOperation(void)
 {
-    if(taskVar_mode == 1)
+    // Manual Mode
+    if(taskVar_mode == 1)   
     {
         if(((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW)) || ((ReadInput(INPUT_BUP) == HIGH) && (ReadInput(INPUT_BDN) == HIGH)))
         {
@@ -67,5 +73,14 @@ void ManualOperation(void)
             }
         }
     }
+    // Reset Mode
+    if(taskVar_mode == 2)   
+    {
+        do
+        {
+            digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
+        } while(ReadInput(INPUT_FL0) == LOW);
+        taskVar_mode = 1;
+    }    
 }
 

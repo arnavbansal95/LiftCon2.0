@@ -6,13 +6,12 @@
 #ifndef TASK_H_
 #define TASK_H_
 
-void CheckUPDownManual(void);
-void ManualOperation(void);
-void AutoOperation(void);
+void CheckInterrupt(void);
+void LiftOperation(void);
 
 static Scheduler runner;
-static Task CheckUPDownManualTask(10, TASK_FOREVER, &CheckUPDownManual, &runner, true);
-static Task ManualOperationTask(10, TASK_FOREVER, &ManualOperation, &runner, true);
+static Task CheckInterruptTask(10, TASK_FOREVER, &CheckInterrupt, &runner, true);
+static Task LiftOperationTask(10, TASK_FOREVER, &LiftOperation, &runner, true);
 static Task SplashScreenTask(1, 5000, &SplashScreen, &runner, true);
 
 #endif
