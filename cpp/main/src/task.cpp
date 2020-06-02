@@ -50,20 +50,14 @@ void ManualOperation(void)
                 {
                     digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_BUP));
                 }
-                else if(ReadInput(INPUT_BDN) == LOW)
+                if(ReadInput(INPUT_BDN) == LOW)
                 {
                     digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_BDN));
                 }
-                else
-                {
-                    digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_BUP));
-                    digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_BDN));
-                }
-                
             }
         }
     }
-    if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
+    if(((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW)) || ((ReadInput(INPUT_BUP) == HIGH) && (ReadInput(INPUT_BDN) == HIGH)))
     {
         digitalWrite(OUTPUT2_UPM, LOW);
         digitalWrite(OUTPUT2_DNM, LOW);
