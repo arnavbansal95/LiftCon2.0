@@ -5,7 +5,7 @@ int taskVar_mode = -1;                              // mode = 0: Auto Mode,
                                                     // mode = 2: Reset, 
                                                     // mode = -1: Start State
 unsigned long previousMillis[2] = {0, 0};           // will store last time 
-unsigned long currentMillis[2] = {0, 0};            // will store current time
+unsigned long currentMillis[2];                     // will store current time
 const long interval = 5000;                         // interval
 
 void CheckInterrupt(void)
@@ -17,9 +17,9 @@ void CheckInterrupt(void)
     }
     if(taskVar_mode == 0)
     {   
-        currentMillis[0] = millis();
         if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW) || (ReadInput(INPUT_RST) == LOW))
         {
+            currentMillis[0] = millis();
             if (currentMillis[0] - previousMillis[0] >= interval) 
             {
                 previousMillis[0] = currentMillis[0];
@@ -37,11 +37,17 @@ void CheckInterrupt(void)
                 }
             }
         }
+        else
+        {
+            previousMillis[0] = millis();
+        }
+        
     }
     if(taskVar_mode == 1)
     {
         if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
         {
+            currentMillis[1] = millis();
             if (currentMillis[1] - previousMillis[1] >= interval) 
             {
                 previousMillis[1] = currentMillis[1];
@@ -52,6 +58,11 @@ void CheckInterrupt(void)
                     taskVar_mode = 0;
                 }
             }
+            else
+            {
+                previousMillis[1] = millis();
+            }
+            
         }
     }
 }
