@@ -13,9 +13,6 @@ void CheckUPDownManual(void)
             {
                 taskVar_mode = 1;
                 Serial.println("Manual Mode Activated");
-                runner.addTask(ManualOperationTask);
-                ManualOperationTask.enable();
-                Serial.println("Manual Mode Task Added and Enabled");
                 delay(2000);
             }
         }
@@ -29,9 +26,6 @@ void CheckUPDownManual(void)
             {
                 taskVar_mode = 0;
                 Serial.println("Auto Mode Activated");
-                ManualOperationTask.disable();
-                runner.deleteTask(ManualOperationTask);
-                Serial.println("Manual Mode Task Disabled and Deleted");
                 delay(2000);
             }
         }
