@@ -70,7 +70,7 @@ void CheckInterrupt(void)
 
 void LiftOperation(void)
 {
-    // Manual Mode
+    // Maintenance Mode
     if(taskVar_mode == MAINTENANCE)   
     {
         if(((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW)) || ((ReadInput(INPUT_BUP) == HIGH) && (ReadInput(INPUT_BDN) == HIGH)))
@@ -85,11 +85,11 @@ void LiftOperation(void)
                 delay(100);
                 if(ReadInput(INPUT_BUP) == LOW)
                 {
-                    digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_BUP));
+                    digitalWrite(OUTPUT2_UPM, (!ReadInput(INPUT_BUP) & !ReadInput(INPUT_RLU)));
                 }
                 if(ReadInput(INPUT_BDN) == LOW)
                 {
-                    digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_BDN));
+                    digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_BDN) & !ReadInput(INPUT_RLD)));
                 }
             }
         }
