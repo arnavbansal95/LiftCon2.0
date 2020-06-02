@@ -14,6 +14,7 @@ void setup()
   InitOutputs();
   InitLCD();
   Serial.println("===============================");
+  Serial.println("     Lift Controller V2.0      ");
   Serial.println("     System:   Initialized     ");
   runner.startNow();
   Serial.println("  Scheduler:   Initialized     ");
