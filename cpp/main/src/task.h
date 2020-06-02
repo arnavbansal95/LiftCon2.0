@@ -10,9 +10,9 @@ void CheckUPDownManual(void);
 void ManualOperation(void);
 void AutoOperation(void);
 
-static Task CheckUPDownManualTask(10, TASK_FOREVER, &CheckUPDownManual);
-static Task ManualOperationTask(100, TASK_FOREVER, &ManualOperation);
-static Task SplashScreenTask(1, 5000, &SplashScreen);
 static Scheduler runner;
+static Task CheckUPDownManualTask(10, TASK_FOREVER, &CheckUPDownManual, &runner, true);
+static Task ManualOperationTask(10, TASK_FOREVER, &ManualOperation, &runner, true);
+static Task SplashScreenTask(1, 5000, &SplashScreen, &runner, true);
 
 #endif
