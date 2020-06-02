@@ -13,6 +13,7 @@ void CheckUPDownManual(void)
             {
                 taskVar_mode = 1;
                 Serial.println("Manual Mode Activated");
+                while(ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW);
             }
         }
     }
@@ -25,6 +26,7 @@ void CheckUPDownManual(void)
             {
                 taskVar_mode = 0;
                 Serial.println("Auto Mode Activated");
+                while(ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW);
             }
         }
     }
