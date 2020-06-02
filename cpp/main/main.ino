@@ -19,7 +19,6 @@ void setup()
   Serial.println("  Scheduler:   Initialized     ");
   runner.addTask(SplashScreenTask);
   runner.addTask(CheckUPDownManualTask);
-  runner.addTask(ManualOperationTask);
   Serial.println("      Tasks:   Added           ");
   SplashScreenTask.enable();
   CheckUPDownManualTask.enable();
