@@ -48,5 +48,10 @@ void ManualOperation(void)
         }
         
     }
+    if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
+    {
+        digitalWrite(OUTPUT2_UPM, LOW);
+        digitalWrite(OUTPUT2_DNM, LOW);
+    }
 }
 
