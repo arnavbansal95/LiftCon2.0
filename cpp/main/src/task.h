@@ -6,6 +6,14 @@
 #ifndef TASK_H_
 #define TASK_H_
 
+typedef enum
+{
+    SERVICE,
+    MAINTENANCE,
+    RESET,
+    STARTUP
+} mode_t;
+
 void CheckInterrupt(void);
 void LiftOperation(void);
 

@@ -1,21 +1,21 @@
 #include "task.h"
 
-int taskVar_mode = -1;                              // mode = 0: Auto Mode, 
-                                                    // mode = 1: Manual Mode, 
+mode_t taskVar_mode = STARTUP;                      // mode = 0: Service Mode, 
+                                                    // mode = 1: Maintenance Mode, 
                                                     // mode = 2: Reset, 
-                                                    // mode = -1: Start State
+                                                    // mode = -1: Startup State
 unsigned long previousMillis[2] = {0, 0};           // will store last time 
 unsigned long currentMillis[2];                     // will store current time
 const long interval = 5000;                         // interval
 
 void CheckInterrupt(void)
 {
-    if(taskVar_mode == -1)
+    if(taskVar_mode == STARTUP)
     {
         Serial.println("     Service Mode Activated    ");
         taskVar_mode = 0;    
     }
-    if(taskVar_mode == 0)
+    if(taskVar_mode == SERVICE)
     {   
         if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW) || (ReadInput(INPUT_RST) == LOW))
         {
@@ -27,14 +27,14 @@ void CheckInterrupt(void)
                 {
                     Serial.println("   Maintenance Mode Activated  ");
                     while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
-                    taskVar_mode = 1;
+                    taskVar_mode = MAINTENANCE;
                 }
-                if((ReadInput(INPUT_RST) == LOW) && (taskVar_mode == 0))
+                if((ReadInput(INPUT_RST) == LOW) && (taskVar_mode == SERVICE))
                 {
                     if((ReadInput(INPUT_FL0) == LOW) && (ReadInput(INPUT_FL1) == LOW) && (ReadInput(INPUT_FL2) == LOW) && (ReadInput(INPUT_FL3) == LOW))
                     {
                         Serial.println("       Reset Mode Activated    ");
-                        taskVar_mode = 2;
+                        taskVar_mode = RESET;
                     }
                 }
             }
@@ -45,7 +45,7 @@ void CheckInterrupt(void)
         }
         
     }
-    if(taskVar_mode == 1)
+    if(taskVar_mode == MAINTENANCE)
     {
         if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
         {
@@ -57,7 +57,7 @@ void CheckInterrupt(void)
                 {
                     Serial.println("     Service Mode Activated    ");
                     while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
-                    taskVar_mode = 0;
+                    taskVar_mode = SERVICE;
                 }
             }
         }
@@ -71,7 +71,7 @@ void CheckInterrupt(void)
 void LiftOperation(void)
 {
     // Manual Mode
-    if(taskVar_mode == 1)   
+    if(taskVar_mode == MAINTENANCE)   
     {
         if(((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW)) || ((ReadInput(INPUT_BUP) == HIGH) && (ReadInput(INPUT_BDN) == HIGH)))
         {
@@ -95,7 +95,7 @@ void LiftOperation(void)
         }
     }
     // Reset Mode
-    if(taskVar_mode == 2)   
+    if(taskVar_mode == RESET)   
     {
         do
         {
@@ -103,7 +103,7 @@ void LiftOperation(void)
         } while(ReadInput(INPUT_FL0) == LOW);
         digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
         Serial.println("     Service Mode Activated    ");
-        taskVar_mode = 0;
+        taskVar_mode = SERVICE;
     }    
 }
 
