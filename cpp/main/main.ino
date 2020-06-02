@@ -16,8 +16,10 @@ void setup()
   runner.init();
   Serial.println("  Scheduler:   Initialized     ");
   runner.addTask(SplashScreenTask);
+  runner.addTask(CheckUPDownManualTask);
   Serial.println("      Tasks:   Added           ");
   SplashScreenTask.enable();
+  CheckUPDownManualTask.enable();
   Serial.println("      Tasks:   Enabled         ");
   Serial.println("===============================");
 }
