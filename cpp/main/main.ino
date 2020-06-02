@@ -11,10 +11,10 @@ static void CheckUPDownManual(void)
 {
     if(taskVar_mode == 0)
     {
-        if((ReadInput(INPUT_BUP) == LOW) || (ReadInput(INPUT_BDN) == LOW))
+        if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
         {
             delay(5000);
-            if((ReadInput(INPUT_BUP) == LOW) || (ReadInput(INPUT_BDN) == LOW))
+            if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
             {
                 taskVar_mode = 1;
                 Serial.println("Manual Mode Activated");
@@ -24,10 +24,10 @@ static void CheckUPDownManual(void)
     }
     if(taskVar_mode == 1)
     {
-        if((ReadInput(INPUT_BUP) == LOW) || (ReadInput(INPUT_BDN) == LOW))
+        if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
         {
             delay(5000);
-            if((ReadInput(INPUT_BUP) == LOW) || (ReadInput(INPUT_BDN) == LOW))
+            if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
             {
                 taskVar_mode = 0;
                 Serial.println("Auto Mode Activated");
