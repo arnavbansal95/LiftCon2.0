@@ -7,6 +7,13 @@ const long interval = 5000;                         // interval
 
 void CheckInterrupt(void)
 {
+    if (CheckInterruptTask.isFirstIteration())
+    {
+        if(taskVar_mode == 0)
+        {
+            Serial.println("     Service Mode Activated    ");    
+        }
+    }
     if(taskVar_mode == 0)
     {   
         currentMillis[0] = millis();
@@ -20,6 +27,11 @@ void CheckInterrupt(void)
                     Serial.println("Maintenance Mode Activated");
                     while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
                     taskVar_mode = 1;
+                }
+                if((ReadInput(INPUT_RST) == LOW) && (taskVar_mode == 0))
+                {
+                    Serial.println("Reset Mode Activated");
+                    taskVar_mode = 2;
                 }
             }
         }
@@ -36,11 +48,6 @@ void CheckInterrupt(void)
                     Serial.println("Service Mode Activated");
                     while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
                     taskVar_mode = 0;
-                }
-                if(ReadInput(INPUT_RST) == LOW)
-                {
-                    Serial.println("Reset Mode Activated");
-                    taskVar_mode = 2;
                 }
             }
         }
