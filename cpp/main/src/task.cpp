@@ -102,7 +102,7 @@ void LiftOperation(void)
             digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
         } while(ReadInput(INPUT_FL0) == LOW);
         Serial.println("     Service Mode Activated    ");
-        taskVar_mode = 1;
+        taskVar_mode = 0;
     }    
 }
 
