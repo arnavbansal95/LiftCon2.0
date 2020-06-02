@@ -18,6 +18,7 @@ static void CheckUPDownManual(void)
             {
                 taskVar_mode = 1;
                 Serial.println("Manual Mode Activated");
+                delay(1000);
             }
         }
     }
@@ -30,6 +31,7 @@ static void CheckUPDownManual(void)
             {
                 taskVar_mode = 0;
                 Serial.println("Auto Mode Activated");
+                delay(1000);
             }
         }
     }
