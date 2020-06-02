@@ -13,7 +13,7 @@ void CheckInterrupt(void)
     if(taskVar_mode == STARTUP)
     {
         Serial.println("     Service Mode Activated    ");
-        taskVar_mode = 0;    
+        taskVar_mode = SERVICE;    
     }
     if(taskVar_mode == SERVICE)
     {   
