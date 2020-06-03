@@ -1,12 +1,47 @@
 #include "task.h"
 
-mode_t taskVar_mode = STARTUP;                      // mode = 0: Service Mode, 
-                                                    // mode = 1: Maintenance Mode, 
-                                                    // mode = 2: Reset, 
-                                                    // mode = -1: Startup State
-unsigned long previousMillis[2] = {0, 0};           // will store last time 
-unsigned long currentMillis[2];                     // will store current time
-const long interval = 5000;                         // interval
+bool            taskVar_Critical = false;               // False: System Stop, True: Operational    
+mode_t          taskVar_mode = STARTUP;                 // mode = 0: Service Mode, 
+                                                        // mode = 1: Maintenance Mode, 
+                                                        // mode = 2: Reset, 
+                                                        // mode = -1: Startup State
+unsigned long   previousMillis[2] = {0, 0};             // will store last time 
+unsigned long   currentMillis[2];                       // will store current time
+const long      interval = 5000;                        // interval
+
+void CriticalCheck(void)
+{
+    static uint8_t taskVar_CriticalRes = ((ReadInput(INPUT_GLS) & ReadInput(INPUT_ESP) & ReadInput(INPUT_VSP)); 
+    if(taskVar_mode == STARTUP)
+    {
+        if(taskVar_CriticalRes == HIGH)
+        {
+            Serial.println(" Inital Critical Check: Passed ");
+            digitalWrite(OUTPUT2_MCN, taskVar_CriticalRes);
+            taskVar_Critical = true;
+        }
+        if(taskVar_CriticalRes == LOW)
+        {
+            Serial.println(" Inital Critical Check: Failed ");
+            digitalWrite(OUTPUT2_MCN, taskVar_CriticalRes);
+            taskVar_Critical = false;
+        }
+    }
+    else
+    {
+        if((taskVar_CriticalRes == HIGH) && (!taskVar_CriticalRes))
+        {
+            Serial.println("     Critical Check: Passed    ");
+            taskVar_Critical = true;
+        }
+        if((taskVar_CriticalRes == LOW) && (taskVar_CriticalRes))
+        {
+            Serial.println("     Critical Check: Failed    ");
+            taskVar_Critical = false;
+        }
+        digitalWrite(OUTPUT2_MCN, taskVar_CriticalRes);
+    }
+}
 
 void CheckInterrupt(void)
 {
