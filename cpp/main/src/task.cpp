@@ -11,21 +11,20 @@ const long      interval = 5000;                        // interval
 
 void CriticalCheck(void)
 {
-    static uint8_t taskVar_CriticalRes = ((ReadInput(INPUT_GLS) & ReadInput(INPUT_ESP) & ReadInput(INPUT_VSP)); 
+    static uint8_t taskVar_CriticalRes = (ReadInput(INPUT_GLS) & ReadInput(INPUT_ESP) & ReadInput(INPUT_VSP)); 
     if(taskVar_mode == STARTUP)
     {
         if(taskVar_CriticalRes == HIGH)
         {
             Serial.println(" Inital Critical Check: Passed ");
-            digitalWrite(OUTPUT2_MCN, taskVar_CriticalRes);
             taskVar_Critical = true;
         }
         if(taskVar_CriticalRes == LOW)
         {
             Serial.println(" Inital Critical Check: Failed ");
-            digitalWrite(OUTPUT2_MCN, taskVar_CriticalRes);
             taskVar_Critical = false;
         }
+        digitalWrite(OUTPUT2_MCN, taskVar_CriticalRes);
     }
     else
     {
