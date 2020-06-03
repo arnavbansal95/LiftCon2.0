@@ -14,31 +14,31 @@ void CriticalCheck(void)
     static uint8_t taskVar_CriticalRes = (ReadInput(INPUT_GLS) & ReadInput(INPUT_ESP) & ReadInput(INPUT_VSP)); 
     if(taskVar_mode == STARTUP)
     {
-        if(taskVar_CriticalRes == HIGH)
+        if(taskVar_CriticalRes == LOW)
         {
             Serial.println(" Inital Critical Check: Passed ");
             taskVar_Critical = true;
         }
-        if(taskVar_CriticalRes == LOW)
+        if(taskVar_CriticalRes == HIGH)
         {
             Serial.println(" Inital Critical Check: Failed ");
             taskVar_Critical = false;
         }
-        digitalWrite(OUTPUT2_MCN, taskVar_CriticalRes);
+        digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
     }
     else
     {
-        if((taskVar_CriticalRes == HIGH) && (!taskVar_CriticalRes))
+        if((taskVar_CriticalRes == LOW) && (!taskVar_Critical))
         {
             Serial.println("     Critical Check: Passed    ");
             taskVar_Critical = true;
         }
-        if((taskVar_CriticalRes == LOW) && (taskVar_CriticalRes))
+        if((taskVar_CriticalRes == HIGH) && (taskVar_Critical))
         {
             Serial.println("     Critical Check: Failed    ");
             taskVar_Critical = false;
         }
-        digitalWrite(OUTPUT2_MCN, taskVar_CriticalRes);
+        digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
     }
 }
 
