@@ -105,7 +105,7 @@ bool DoorCheck(void)
 {
     static uint8_t taskVar_DoorLimitStatus;
     taskVar_DoorLimitStatus = ReadInput(INPUT_DLS); 
-    digitalWrite(OUTPUT2_DIN, !taskVar_DoorLimitStatus);
+    digitalWrite(OUTPUT2_DIN, taskVar_DoorLimitStatus);
     if(taskVar_DoorLimitStatus == LOW)
     {
         return(true);
@@ -122,6 +122,8 @@ void LiftOperation(void)
 {
     if(taskVar_Critical)
     {
+        static bool taskVar_DoorLimitStatus_LFTOP;
+        taskVar_DoorLimitStatus_LFTOP = DoorCheck();
         // Maintenance Mode
         if(taskVar_mode == MAINTENANCE)   
         {
@@ -147,15 +149,18 @@ void LiftOperation(void)
             }
         }
         // Reset Mode
-        if((taskVar_mode == RESET) && (DoorCheck()))   
+        if(taskVar_mode == RESET)   
         {
-            do
+            if(taskVar_DoorLimitStatus_LFTOP)
             {
+                do
+                {
+                    digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
+                } while(ReadInput(INPUT_FL0) == LOW);
                 digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
-            } while(ReadInput(INPUT_FL0) == LOW);
-            digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
-            Serial.println("     Service Mode Activated    ");
-            taskVar_mode = SERVICE;
+                Serial.println("     Service Mode Activated    ");
+                taskVar_mode = SERVICE;
+            }
         }
     }        
 }
