@@ -1,10 +1,7 @@
 #include "task.h"
 
 bool            taskVar_Critical = false;               // False: System Stop, True: Operational    
-mode_t          taskVar_mode = STARTUP;                 // mode = 0: Service Mode, 
-                                                        // mode = 1: Maintenance Mode, 
-                                                        // mode = 2: Reset, 
-                                                        // mode = -1: Startup State
+mode_t          taskVar_mode = STARTUP;                 // Stores Current state of LiftOperation 
 unsigned long   previousMillis[2] = {0, 0};             // will store last time 
 unsigned long   currentMillis[2];                       // will store current time
 const long      interval = 5000;                        // interval
@@ -18,6 +15,8 @@ void CriticalCheck(void)
         if(taskVar_CriticalRes == LOW)
         {
             Serial.println(" Inital Critical Check: Passed ");
+            Serial.println("     Service Mode Activated    ");
+            taskVar_mode = SERVICE;
             taskVar_Critical = true;
         }
         if(taskVar_CriticalRes == HIGH)
@@ -47,8 +46,7 @@ void CheckInterrupt(void)
 {
     if(taskVar_mode == STARTUP)
     {
-        Serial.println("     Service Mode Activated    ");
-        taskVar_mode = SERVICE;    
+            
     }
     if(taskVar_mode == SERVICE)
     {   
@@ -103,42 +101,62 @@ void CheckInterrupt(void)
     }
 }
 
+bool DoorCheck(void)
+{
+    static taskVar_DoorLimitStatus;
+    taskVar_DoorLimitStatus = ReadInput(INPUT_DLS); 
+    digitalWrite(OUTPUT2_DIN, !taskVar_DoorLimitStatus);
+    if(taskVar_DoorLimitStatus == LOW)
+    {
+        return(true);
+    }
+    else
+    {
+        Serial.println("        Door Open: Error       ");
+        return(false);
+    }
+    
+}
+
 void LiftOperation(void)
 {
-    // Maintenance Mode
-    if(taskVar_mode == MAINTENANCE)   
+    if(taskVar_Critical)
     {
-        if(((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW)) || ((ReadInput(INPUT_BUP) == HIGH) && (ReadInput(INPUT_BDN) == HIGH)))
+        // Maintenance Mode
+        if(taskVar_mode == MAINTENANCE)   
         {
-            digitalWrite(OUTPUT2_UPM, LOW);
-            digitalWrite(OUTPUT2_DNM, LOW);
-        }
-        else
-        {
-            if((ReadInput(INPUT_BUP) == LOW) || (ReadInput(INPUT_BDN) == LOW))
+            if(((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW)) || ((ReadInput(INPUT_BUP) == HIGH) && (ReadInput(INPUT_BDN) == HIGH)))
             {
-                delay(100);
-                if(ReadInput(INPUT_BUP) == LOW)
+                digitalWrite(OUTPUT2_UPM, LOW);
+                digitalWrite(OUTPUT2_DNM, LOW);
+            }
+            else
+            {
+                if((ReadInput(INPUT_BUP) == LOW) || (ReadInput(INPUT_BDN) == LOW))
                 {
-                    digitalWrite(OUTPUT2_UPM, (!ReadInput(INPUT_BUP) & !ReadInput(INPUT_RLU)));
-                }
-                if(ReadInput(INPUT_BDN) == LOW)
-                {
-                    digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_BDN) & !ReadInput(INPUT_RLD)));
+                    delay(100);
+                    if(ReadInput(INPUT_BUP) == LOW)
+                    {
+                        digitalWrite(OUTPUT2_UPM, (!ReadInput(INPUT_BUP) & !ReadInput(INPUT_RLU)));
+                    }
+                    if(ReadInput(INPUT_BDN) == LOW)
+                    {
+                        digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_BDN) & !ReadInput(INPUT_RLD)));
+                    }
                 }
             }
         }
-    }
-    // Reset Mode
-    if(taskVar_mode == RESET)   
-    {
-        do
+        // Reset Mode
+        if((taskVar_mode == RESET) && (DoorCheck()))   
         {
+            do
+            {
+                digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
+            } while(ReadInput(INPUT_FL0) == LOW);
             digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
-        } while(ReadInput(INPUT_FL0) == LOW);
-        digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
-        Serial.println("     Service Mode Activated    ");
-        taskVar_mode = SERVICE;
-    }    
+            Serial.println("     Service Mode Activated    ");
+            taskVar_mode = SERVICE;
+        }
+    }        
 }
 

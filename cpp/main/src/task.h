@@ -14,8 +14,9 @@ typedef enum
     STARTUP
 } mode_t;
 
-void CriticalCheck(void);   // Checks Gravity Limit, Emergency Stop 
 void CheckInterrupt(void);  // Checks Operation Conditions
+void CriticalCheck(void);   // Checks Gravity Limit, Emergency Stop, VSP_D2 
+bool DoorCheck(void);       // Checks Door Status
 void LiftOperation(void);   // Performs Operation 
 
 static Scheduler runner;
