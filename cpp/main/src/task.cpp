@@ -155,7 +155,14 @@ void LiftOperation(void)
             {
                 do
                 {
-                    digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
+                    if(DoorCheck())
+                    {
+                        digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
+                    }
+                    else
+                    {
+                        digitalWrite(OUTPUT2_DNM, LOW);
+                    }
                 } while(ReadInput(INPUT_FL0) == LOW);
                 digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
                 Serial.println("     Service Mode Activated    ");
