@@ -128,7 +128,7 @@ void LiftOperation(void)
         // Maintenance Mode
         if(taskVar_mode == MAINTENANCE)   
         {
-            if(((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW)) || ((ReadInput(INPUT_BUP) == HIGH) && (ReadInput(INPUT_BDN) == HIGH)))
+            if(ReadInput(INPUT_BUP) == ReadInput(INPUT_BDN))
             {
                 digitalWrite(OUTPUT2_UPM, LOW);
                 digitalWrite(OUTPUT2_DNM, LOW);
