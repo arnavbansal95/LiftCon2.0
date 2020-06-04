@@ -1,12 +1,12 @@
 #include "task.h"
 
-bool            taskVar_Critical = false;               // False: System Stop, True: Operational    
-mode_t          taskVar_mode = STARTUP;                 // Stores Current state of LiftOperation 
-unsigned long   previousMillis[2] = {0, 0};             // will store last time 
-unsigned long   currentMillis[2];                       // will store current time
-const long      interval = 5000;                        // interval
+static bool            taskVar_Critical = false;               // False: System Stop, True: Operational    
+static mode_t          taskVar_mode = STARTUP;                 // Stores Current state of LiftOperation 
+static unsigned long   previousMillis[2] = {0, 0};             // will store last time 
+static unsigned long   currentMillis[2];                       // will store current time
+static const long      interval = 5000;                        // interval
 
-void CriticalCheck(void)
+bool CriticalCheck(void)
 {
     static uint8_t taskVar_CriticalRes;
     taskVar_CriticalRes = ReadInput(INPUT_GLS) | ReadInput(INPUT_ESP) | ReadInput(INPUT_VSP); 
@@ -44,6 +44,7 @@ void CriticalCheck(void)
         }
         digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
     }
+    return(taskVar_Critical);
 }
 
 void CheckInterrupt(void)
@@ -155,7 +156,7 @@ void LiftOperation(void)
             {
                 do
                 {
-                    if(DoorCheck())
+                    if(DoorCheck() && CriticalCheck())
                     {
                         digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
                     }

@@ -15,7 +15,7 @@ typedef enum
 } mode_t;
 
 void CheckInterrupt(void);  // Checks Operation Conditions
-void CriticalCheck(void);   // Checks Gravity Limit, Emergency Stop, VSP_D2 
+bool CriticalCheck(void);   // Checks Gravity Limit, Emergency Stop, VSP_D2 
 bool DoorCheck(void);       // Checks Door Status
 void LiftOperation(void);   // Performs Operation 
 
