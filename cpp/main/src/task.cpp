@@ -103,7 +103,7 @@ void CheckInterrupt(void)
 
 bool DoorCheck(void)
 {
-    static taskVar_DoorLimitStatus;
+    static uint8_t taskVar_DoorLimitStatus;
     taskVar_DoorLimitStatus = ReadInput(INPUT_DLS); 
     digitalWrite(OUTPUT2_DIN, !taskVar_DoorLimitStatus);
     if(taskVar_DoorLimitStatus == LOW)
