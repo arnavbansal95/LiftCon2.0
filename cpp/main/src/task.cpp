@@ -35,12 +35,16 @@ bool CriticalCheck(void)
             Serial.println("     Critical Check: Passed    ");
             taskVar_Critical = true;
         }
-        if((taskVar_CriticalRes == HIGH) && (taskVar_Critical))
+        else if((taskVar_CriticalRes == HIGH) && (taskVar_Critical))
         {
             Serial.println("     Critical Check: Failed    ");
             taskVar_Critical = false;
             digitalWrite(OUTPUT2_UPM, !taskVar_CriticalRes);
             digitalWrite(OUTPUT2_DNM, !taskVar_CriticalRes);    
+        }
+        else
+        {
+            digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);    
         }
         digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
     }
