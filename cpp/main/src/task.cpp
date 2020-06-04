@@ -18,6 +18,7 @@ bool CriticalCheck(void)
             Serial.println("     Service Mode Activated    ");
             taskVar_mode = SERVICE;
             taskVar_Critical = true;
+            digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
         }
         if(taskVar_CriticalRes == HIGH)
         {
@@ -25,8 +26,8 @@ bool CriticalCheck(void)
             taskVar_Critical = false;
             digitalWrite(OUTPUT2_UPM, !taskVar_CriticalRes);
             digitalWrite(OUTPUT2_DNM, !taskVar_CriticalRes);
+            digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
         }
-        digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
     }
     else
     {
@@ -34,6 +35,7 @@ bool CriticalCheck(void)
         {
             Serial.println("     Critical Check: Passed    ");
             taskVar_Critical = true;
+            digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
         }
         else if((taskVar_CriticalRes == HIGH) && (taskVar_Critical))
         {
@@ -41,12 +43,13 @@ bool CriticalCheck(void)
             taskVar_Critical = false;
             digitalWrite(OUTPUT2_UPM, !taskVar_CriticalRes);
             digitalWrite(OUTPUT2_DNM, !taskVar_CriticalRes);    
+            digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
         }
         else
-        {
-            digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);    
+        { 
+            // Do Nothing
         }
-        digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
+        
     }
     return(taskVar_Critical);
 }
