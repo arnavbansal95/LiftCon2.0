@@ -12,6 +12,8 @@ const long      interval = 5000;                        // interval
 void CriticalCheck(void)
 {
     static uint8_t taskVar_CriticalRes = (ReadInput(INPUT_GLS) & ReadInput(INPUT_ESP) & ReadInput(INPUT_VSP)); 
+    Serial.println(taskVar_CriticalRes);
+    delay(200);
     if(taskVar_mode == STARTUP)
     {
         if(taskVar_CriticalRes == LOW)
