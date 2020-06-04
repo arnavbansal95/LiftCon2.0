@@ -23,6 +23,8 @@ void CriticalCheck(void)
         {
             Serial.println(" Inital Critical Check: Failed ");
             taskVar_Critical = false;
+            digitalWrite(OUTPUT2_UPM, !taskVar_CriticalRes);
+            digitalWrite(OUTPUT2_DNM, !taskVar_CriticalRes);
         }
         digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
     }
@@ -37,6 +39,8 @@ void CriticalCheck(void)
         {
             Serial.println("     Critical Check: Failed    ");
             taskVar_Critical = false;
+            digitalWrite(OUTPUT2_UPM, !taskVar_CriticalRes);
+            digitalWrite(OUTPUT2_DNM, !taskVar_CriticalRes);    
         }
         digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
     }
@@ -44,10 +48,6 @@ void CriticalCheck(void)
 
 void CheckInterrupt(void)
 {
-    if(taskVar_mode == STARTUP)
-    {
-            
-    }
     if(taskVar_mode == SERVICE)
     {   
         if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW) || (ReadInput(INPUT_RST) == LOW))
@@ -120,10 +120,10 @@ bool DoorCheck(void)
 
 void LiftOperation(void)
 {
+    static bool taskVar_DoorLimitStatus_LFTOP;
+    taskVar_DoorLimitStatus_LFTOP = DoorCheck();
     if(taskVar_Critical)
     {
-        static bool taskVar_DoorLimitStatus_LFTOP;
-        taskVar_DoorLimitStatus_LFTOP = DoorCheck();
         // Maintenance Mode
         if(taskVar_mode == MAINTENANCE)   
         {
