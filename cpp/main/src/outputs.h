@@ -1,5 +1,4 @@
 #include "Arduino.h"
-#include "lib/U8glib/src/U8glib.h"
 
 #ifndef OUTPUTS_H_
 #define OUTPUTS_H_
@@ -26,14 +25,6 @@
 #define OUTPUT2_UPM  31     // Up Motion
 #define OUTPUT2_MCN  33     // Main Contactor
 
-// LCD Control Pins
-#define GR_LCD_RS  53
-#define GR_LCD_RW  51
-#define GR_LCD_E   52
-static U8GLIB_ST7920_128X64_1X u8g(GR_LCD_E, GR_LCD_RW, GR_LCD_RS);
-
 void InitOutputs(void);              // Initialize Outputs
-void InitLCD(void);                  // Initialize LCD
-void SplashScreen(void);             // Test LCD
 
 #endif
