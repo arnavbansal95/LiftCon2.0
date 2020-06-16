@@ -166,27 +166,27 @@ int GetTargetFloor(void)
 
 int  GetCurrentFloor(void)
 {
-    if(ReadInput(INPUT_FL0) == LOW)
+    if(ReadInput(INPUT_FL0) == HIGH)
     {
         return(0);
     }
-    else if(ReadInput(INPUT_FL1) == LOW)
+    else if(ReadInput(INPUT_FL1) == HIGH)
     {
         return(1);
     }
-    else if(ReadInput(INPUT_FL2) == LOW)
+    else if(ReadInput(INPUT_FL2) == HIGH)
     {
         return(2);
     }
-    else if(ReadInput(INPUT_FL3) == LOW)
+    else if(ReadInput(INPUT_FL3) == HIGH)
     {
         return(3);
     }
-    else if(ReadInput(INPUT_FL4) == LOW)
+    else if(ReadInput(INPUT_FL4) == HIGH)
     {
         return(4);
     }
-    else if(ReadInput(INPUT_FL5) == LOW)
+    else if(ReadInput(INPUT_FL5) == HIGH)
     {
         return(5);
     }
