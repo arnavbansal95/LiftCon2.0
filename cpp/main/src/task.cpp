@@ -149,14 +149,14 @@ int GetTargetFloor(void)
     {
         return(3);
     }
-    else if(ReadInput(INPUT_FP4) == LOW)
+    /* else if(ReadInput(INPUT_FP4) == LOW)
     {
         return(4);
     }
     else if(ReadInput(INPUT_FP5) == LOW)
     {
         return(5);
-    }
+    } */
     else
     {
         return(-1);
@@ -182,14 +182,14 @@ int  GetCurrentFloor(void)
     {
         return(3);
     }
-    else if(ReadInput(INPUT_FL4) == HIGH)
+    /* else if(ReadInput(INPUT_FL4) == HIGH)
     {
         return(4);
     }
     else if(ReadInput(INPUT_FL5) == HIGH)
     {
         return(5);
-    }
+    } */
     else
     {
         return(-1);
