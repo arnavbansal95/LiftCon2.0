@@ -237,7 +237,7 @@ void LiftOperation(void)
                 {
                     if(DoorCheck() && CriticalCheck())
                     {
-                        digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
+                        digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_FL0) & !ReadInput(INPUT_RLD)));
                     }
                     else
                     {
