@@ -17,10 +17,13 @@ typedef enum
 } mode_t;
 
 
-void CheckInterrupt(void);  // Checks Operation Conditions
-bool CriticalCheck(void);   // Checks Gravity Limit, Emergency Stop, VSP_D2 
-bool DoorCheck(void);       // Checks Door Status
-void LiftOperation(void);   // Performs Operation 
+void CheckInterrupt(void);      // Checks Operation Conditions
+bool CriticalCheck(void);       // Checks Gravity Limit, Emergency Stop, VSP_D2 
+bool DoorCheck(void);           // Checks Door Status
+int  GetTargetFloor(void);      // Returns Target Floor
+int  GetCurrentFloor(void);     // Returns Current Floor Status
+void LiftOperation(void);       // Performs Operation 
+
 
 static Scheduler runner;
 static Task CriticalCheckTask(1, TASK_FOREVER, &CriticalCheck, &runner, true);

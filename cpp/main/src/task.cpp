@@ -6,6 +6,8 @@ static mode_t          taskVar_mode_past = STARTUP;            // Stores Past st
 static unsigned long   previousMillis[2] = {0, 0};             // will store last time 
 static unsigned long   currentMillis[2];                       // will store current time
 static const long      interval = 5000;                        // interval
+static int             target_floor = -1;                      // Target Floor Level  (-1 for No Pending Input)
+static int             current_floor = -1;                     // Current Floor Level (-1 for Undefined State)
 
 bool CriticalCheck(void)
 {
@@ -129,6 +131,73 @@ bool DoorCheck(void)
     
 }
 
+int GetTargetFloor(void)
+{
+    if(ReadInput(INPUT_FP0) == LOW)
+    {
+        return(0);
+    }
+    else if(ReadInput(INPUT_FP1) == LOW)
+    {
+        return(1);
+    }
+    else if(ReadInput(INPUT_FP2) == LOW)
+    {
+        return(2);
+    }
+    else if(ReadInput(INPUT_FP3) == LOW)
+    {
+        return(3);
+    }
+    else if(ReadInput(INPUT_FP4) == LOW)
+    {
+        return(4);
+    }
+    else if(ReadInput(INPUT_FP5) == LOW)
+    {
+        return(5);
+    }
+    else
+    {
+        return(-1);
+    }
+    
+}
+
+int  GetCurrentFloor(void)
+{
+    if(ReadInput(INPUT_FL0) == LOW)
+    {
+        return(0);
+    }
+    else if(ReadInput(INPUT_FL1) == LOW)
+    {
+        return(1);
+    }
+    else if(ReadInput(INPUT_FL2) == LOW)
+    {
+        return(2);
+    }
+    else if(ReadInput(INPUT_FL3) == LOW)
+    {
+        return(3);
+    }
+    else if(ReadInput(INPUT_FL4) == LOW)
+    {
+        return(4);
+    }
+    else if(ReadInput(INPUT_FL5) == LOW)
+    {
+        return(5);
+    }
+    else
+    {
+        return(-1);
+    }
+    
+}
+
+
 void LiftOperation(void)
 {
     static bool taskVar_DoorLimitStatus_LFTOP;
@@ -179,6 +248,14 @@ void LiftOperation(void)
                 Serial.println("     Service Mode Activated    ");
                 taskVar_mode = SERVICE;
             }
+        }
+        if(taskVar_mode == SERVICE)   
+        {
+            Serial.print("      Target Floor:");
+            Serial.println(GetTargetFloor());
+            Serial.print("      Current Floor:");
+            Serial.println(GetCurrentFloor());
+            delay(200);
         }
     }        
 }
