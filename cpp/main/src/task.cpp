@@ -61,7 +61,7 @@ bool CriticalCheck(void)
 
 void CheckInterrupt(void)
 {
-    if(taskVar_mode == SERVICE)
+    if(taskVar_mode == SERVICE || taskVar_mode == RESET)
     {   
         if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW) || (ReadInput(INPUT_RST) == LOW))
         {
