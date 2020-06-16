@@ -2,6 +2,7 @@
 
 static bool            taskVar_Critical = false;               // False: System Stop, True: Operational    
 static mode_t          taskVar_mode = STARTUP;                 // Stores Current state of LiftOperation 
+static mode_t          taskVar_mode_past = STARTUP;            // Stores Past state of LiftOperation 
 static unsigned long   previousMillis[2] = {0, 0};             // will store last time 
 static unsigned long   currentMillis[2];                       // will store current time
 static const long      interval = 5000;                        // interval
@@ -43,6 +44,15 @@ bool CriticalCheck(void)
             digitalWrite(OUTPUT2_DNM, !taskVar_CriticalRes);    
         }
         digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
+    }
+    if((!taskVar_Critical) && (taskVar_mode != BREAKDOWN))
+    {
+        taskVar_mode_past = taskVar_mode;
+        taskVar_mode = BREAKDOWN; 
+    }
+    if((taskVar_Critical) && (taskVar_mode == BREAKDOWN))
+    {
+        taskVar_mode = taskVar_mode_past;
     }
     return(taskVar_Critical);
 }

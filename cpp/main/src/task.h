@@ -12,7 +12,8 @@ typedef enum
     SERVICE,
     MAINTENANCE,
     RESET,
-    STARTUP
+    STARTUP,
+    BREAKDOWN
 } mode_t;
 
 
