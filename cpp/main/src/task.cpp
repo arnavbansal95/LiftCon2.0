@@ -260,25 +260,30 @@ void LiftOperation(void)
                 Serial.println(CF);
                 if ((TF >= 0) && (TF != CF))
                 {
-                    taskVar_motorMode = RUNNING;
+                    taskVar_motorMode = READY;
                 }
             }
-            if(taskVar_motorMode == RUNNING)
+            if((taskVar_motorMode == RUNNING) || (taskVar_motorMode == READY))
             {
                 CF = GetCurrentFloor();
-                Serial.print("      Target Floor:");
-                Serial.println(TF);
-                Serial.print("      Current Floor:");
-                Serial.println(CF);
+                if (taskVar_motorMode == READY)
+                {
+                    Serial.print("      Target Floor:");
+                    Serial.println(TF);
+                    Serial.print("      Current Floor:");
+                    Serial.println(CF); 
+                }
                 if ((TF >= 0) && (TF < CF))
                 {
                     Serial.print("      Motion Floor:");
                     Serial.print(" DOWN");
+                    taskVar_motorMode = RUNNING;
                 }
                 if ((TF >= 0) && (TF > CF))
                 {
                     Serial.print("      Motion Floor:");
                     Serial.print(" UP");
+                    taskVar_motorMode = RUNNING;
                 }
                 if ((TF >= 0) && (TF == CF))
                 {
