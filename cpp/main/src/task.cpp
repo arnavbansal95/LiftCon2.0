@@ -317,7 +317,7 @@ void LiftOperation(void)
                         taskVar_motorMotion = IDLE;
                     }
                 }
-                if (((TF >= 0) && (TF > CF) && ((taskVar_motorMotion == UP) || (taskVar_motorMode == READY))) || ((DC && CC) && ((taskVar_motorMotion == DOWN) || (taskVar_motorMode == READY))))
+                if (((TF >= 0) && (TF > CF) && ((taskVar_motorMotion == UP) || (taskVar_motorMode == READY))) || ((DC && CC) && ((taskVar_motorMotion == UP) || (taskVar_motorMode == READY))))
                 {
                     if(ReadInput(INPUT_RLU) == LOW) 
                     {
