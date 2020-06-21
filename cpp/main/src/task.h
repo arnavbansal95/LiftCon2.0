@@ -16,6 +16,12 @@ typedef enum
     BREAKDOWN
 } mode_t;
 
+typedef enum
+{
+    WAITING,
+    RUNNING
+} motor_t;
+
 
 void CheckInterrupt(void);      // Checks Operation Conditions
 bool CriticalCheck(void);       // Checks Gravity Limit, Emergency Stop, VSP_D2 
