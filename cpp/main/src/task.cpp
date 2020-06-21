@@ -288,14 +288,22 @@ void LiftOperation(void)
                 }
                 if ((TF >= 0) && (TF < CF) && ((taskVar_motorMotion == DOWN) || (taskVar_motorMode == READY)))
                 {
-                    if((ReadInput(INPUT_RLD) == LOW) && DoorCheck() && CriticalCheck())
+                    if(ReadInput(INPUT_RLD) == LOW)
                     {
-                        Serial.print("      Motion Floor:");
-                        Serial.println(" DOWN");
-                        digitalWrite(OUTPUT2_UPM, LOW);
-                        digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_RLD));
-                        taskVar_motorMode = RUNNING;
-                        taskVar_motorMotion = DOWN;
+                        if(DoorCheck() && CriticalCheck())
+                        {
+                            Serial.print("      Motion Floor:");
+                            Serial.println(" DOWN");
+                            digitalWrite(OUTPUT2_UPM, LOW);
+                            digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_RLD));
+                            taskVar_motorMode = RUNNING;
+                            taskVar_motorMotion = DOWN;
+                        }
+                        else
+                        {
+                            digitalWrite(OUTPUT2_UPM, LOW);
+                            digitalWrite(OUTPUT2_DNM, LOW);
+                        }
                     }
                     else
                     {
@@ -308,14 +316,22 @@ void LiftOperation(void)
                 }
                 if ((TF >= 0) && (TF > CF) && ((taskVar_motorMotion == UP) || (taskVar_motorMode == READY)))
                 {
-                    if((ReadInput(INPUT_RLU) == LOW) && DoorCheck() && CriticalCheck())
+                    if(ReadInput(INPUT_RLU) == LOW) 
                     {
-                        Serial.print("      Motion Floor:");
-                        Serial.println(" UP");
-                        digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_RLU));
-                        digitalWrite(OUTPUT2_DNM, LOW);
-                        taskVar_motorMode = RUNNING;
-                        taskVar_motorMotion = UP; 
+                        if(DoorCheck() && CriticalCheck())
+                        {
+                            Serial.print("      Motion Floor:");
+                            Serial.println(" UP");
+                            digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_RLU));
+                            digitalWrite(OUTPUT2_DNM, LOW);
+                            taskVar_motorMode = RUNNING;
+                            taskVar_motorMotion = UP;
+                        }
+                        else
+                        {
+                            digitalWrite(OUTPUT2_UPM, LOW);
+                            digitalWrite(OUTPUT2_DNM, LOW);
+                        }
                     }
                     else
                     {
