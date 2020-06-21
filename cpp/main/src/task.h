@@ -23,6 +23,13 @@ typedef enum
     RUNNING
 } motor_t;
 
+typedef enum
+{
+    UP,
+    DOWN,
+    IDLE
+} motion_t;
+
 
 void CheckInterrupt(void);      // Checks Operation Conditions
 bool CriticalCheck(void);       // Checks Gravity Limit, Emergency Stop, VSP_D2 

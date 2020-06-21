@@ -9,6 +9,7 @@ static const long      interval = 5000;                        // interval
 static int             target_floor = -1;                      // Target Floor Level  (-1 for No Pending Input)
 static int             current_floor = -1;                     // Current Floor Level (-1 for Undefined State)
 static motor_t         taskVar_motorMode = WAITING;            // W: Waiting for Operation, R: Running
+static motion_t        taskVar_motorMotion = IDLE;             // U: UP, D: DOWN, I: IDLE
 
 bool CriticalCheck(void)
 {
@@ -212,6 +213,7 @@ void LiftOperation(void)
             {
                 digitalWrite(OUTPUT2_UPM, LOW);
                 digitalWrite(OUTPUT2_DNM, LOW);
+                taskVar_motorMotion = IDLE;
             }
             else
             {
@@ -221,10 +223,12 @@ void LiftOperation(void)
                     if(ReadInput(INPUT_BUP) == LOW)
                     {
                         digitalWrite(OUTPUT2_UPM, (!ReadInput(INPUT_BUP) & !ReadInput(INPUT_RLU)));
+                        taskVar_motorMotion = UP;
                     }
                     if(ReadInput(INPUT_BDN) == LOW)
                     {
                         digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_BDN) & !ReadInput(INPUT_RLD)));
+                        taskVar_motorMotion = DOWN;
                     }
                 }
             }
@@ -273,23 +277,26 @@ void LiftOperation(void)
                     Serial.print("      Current Floor:");
                     Serial.println(CF); 
                 }
-                if ((TF >= 0) && (TF < CF))
-                {
-                    Serial.print("      Motion Floor:");
-                    Serial.println(" DOWN");
-                    taskVar_motorMode = RUNNING;
-                }
-                if ((TF >= 0) && (TF > CF))
-                {
-                    Serial.print("      Motion Floor:");
-                    Serial.println(" UP");
-                    taskVar_motorMode = RUNNING;
-                }
                 if ((TF >= 0) && (TF == CF))
                 {
                     Serial.print("      Motion Floor:");
                     Serial.println(" REACHED");
                     taskVar_motorMode = WAITING;
+                    taskVar_motorMotion = IDLE;
+                }
+                if (((TF >= 0) && (TF < CF)) || (taskVar_motorMotion == DOWN))
+                {
+                    Serial.print("      Motion Floor:");
+                    Serial.println(" DOWN");
+                    taskVar_motorMode = RUNNING;
+                    taskVar_motorMotion = DOWN;
+                }
+                if (((TF >= 0) && (TF > CF)) || (taskVar_motorMotion == UP))
+                {
+                    Serial.print("      Motion Floor:");
+                    Serial.println(" UP");
+                    taskVar_motorMode = RUNNING;
+                    taskVar_motorMotion = UP;
                 }
             }
             delay(200);
