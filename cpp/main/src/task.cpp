@@ -286,32 +286,40 @@ void LiftOperation(void)
                 }
                 if ((TF >= 0) && (TF < CF) && ((taskVar_motorMotion == DOWN) || (taskVar_motorMode == READY)))
                 {
-                    if(ReadInput(INPUT_RLD) == LOW)
+                    if((ReadInput(INPUT_RLD) == LOW) && DoorCheck() && CriticalCheck())
                     {
                         Serial.print("      Motion Floor:");
                         Serial.println(" DOWN");
+                        digitalWrite(OUTPUT2_UPM, LOW);
+                        digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_RLD));
                         taskVar_motorMode = RUNNING;
                         taskVar_motorMotion = DOWN;
                     }
                     else
                     {
                         // Undefined State, take Notice
+                        digitalWrite(OUTPUT2_UPM, LOW);
+                        digitalWrite(OUTPUT2_DNM, LOW);
                         taskVar_motorMode = WAITING;
                         taskVar_motorMotion = IDLE;
                     }
                 }
                 if ((TF >= 0) && (TF > CF) && ((taskVar_motorMotion == UP) || (taskVar_motorMode == READY)))
                 {
-                    if(ReadInput(INPUT_RLU) == LOW)
+                    if((ReadInput(INPUT_RLU) == LOW) && DoorCheck() && CriticalCheck())
                     {
                         Serial.print("      Motion Floor:");
                         Serial.println(" UP");
+                        digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_RLU));
+                        digitalWrite(OUTPUT2_DNM, LOW);
                         taskVar_motorMode = RUNNING;
                         taskVar_motorMotion = UP; 
                     }
                     else
                     {
                         // Undefined State, take Notice
+                        digitalWrite(OUTPUT2_UPM, LOW);
+                        digitalWrite(OUTPUT2_DNM, LOW);
                         taskVar_motorMode = WAITING;
                         taskVar_motorMotion = IDLE;
                     }
