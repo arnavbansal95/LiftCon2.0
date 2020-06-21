@@ -128,8 +128,6 @@ bool DoorCheck(void)
     else
     {
         Serial.println("        Door Open: Error       ");
-        digitalWrite(OUTPUT2_UPM, LOW);
-        digitalWrite(OUTPUT2_DNM, LOW);
         return(false);
     }
     
