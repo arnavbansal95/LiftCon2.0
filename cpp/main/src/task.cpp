@@ -284,14 +284,14 @@ void LiftOperation(void)
                     taskVar_motorMode = WAITING;
                     taskVar_motorMotion = IDLE;
                 }
-                if (((TF >= 0) && (TF < CF)) || (taskVar_motorMotion == DOWN))
+                if ((TF >= 0) && (TF < CF) && (taskVar_motorMotion == DOWN))
                 {
                     Serial.print("      Motion Floor:");
                     Serial.println(" DOWN");
                     taskVar_motorMode = RUNNING;
                     taskVar_motorMotion = DOWN;
                 }
-                if (((TF >= 0) && (TF > CF)) || (taskVar_motorMotion == UP))
+                if ((TF >= 0) && (TF > CF) && (taskVar_motorMotion == UP))
                 {
                     Serial.print("      Motion Floor:");
                     Serial.println(" UP");
