@@ -281,6 +281,8 @@ void LiftOperation(void)
                 {
                     Serial.print("      Motion Floor:");
                     Serial.println(" REACHED");
+                    digitalWrite(OUTPUT2_UPM, LOW);
+                    digitalWrite(OUTPUT2_DNM, LOW);
                     taskVar_motorMode = WAITING;
                     taskVar_motorMotion = IDLE;
                 }
