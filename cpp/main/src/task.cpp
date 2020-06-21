@@ -269,6 +269,9 @@ void LiftOperation(void)
             }
             if((taskVar_motorMode == RUNNING) || (taskVar_motorMode == READY))
             {
+                static bool DC, CC;
+                DC = DoorCheck();
+                CC = CriticalCheck();
                 CF = GetCurrentFloor();
                 if (taskVar_motorMode == READY)
                 {
@@ -286,13 +289,10 @@ void LiftOperation(void)
                     taskVar_motorMode = WAITING;
                     taskVar_motorMotion = IDLE;
                 }
-                if ((TF >= 0) && (TF < CF) && ((taskVar_motorMotion == DOWN) || (taskVar_motorMode == READY)))
+                if (((TF >= 0) && (TF < CF) && ((taskVar_motorMotion == DOWN) || (taskVar_motorMode == READY))) || ((DC && CC) && ((taskVar_motorMotion == DOWN) || (taskVar_motorMode == READY))))
                 {
                     if(ReadInput(INPUT_RLD) == LOW)
                     {
-                        static bool DC, CC;
-                        DC = DoorCheck();
-                        CC = CriticalCheck();
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
@@ -317,13 +317,10 @@ void LiftOperation(void)
                         taskVar_motorMotion = IDLE;
                     }
                 }
-                if ((TF >= 0) && (TF > CF) && ((taskVar_motorMotion == UP) || (taskVar_motorMode == READY)))
+                if (((TF >= 0) && (TF > CF) && ((taskVar_motorMotion == UP) || (taskVar_motorMode == READY))) || ((DC && CC) && ((taskVar_motorMotion == DOWN) || (taskVar_motorMode == READY))))
                 {
                     if(ReadInput(INPUT_RLU) == LOW) 
                     {
-                        static bool DC, CC;
-                        DC = DoorCheck();
-                        CC = CriticalCheck();
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
