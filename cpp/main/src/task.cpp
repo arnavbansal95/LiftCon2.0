@@ -290,7 +290,10 @@ void LiftOperation(void)
                 {
                     if(ReadInput(INPUT_RLD) == LOW)
                     {
-                        if(DoorCheck() && CriticalCheck())
+                        static bool DC, CC;
+                        DC = DoorCheck();
+                        CC = CriticalCheck();
+                        if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
                             Serial.println(" DOWN");
@@ -318,7 +321,10 @@ void LiftOperation(void)
                 {
                     if(ReadInput(INPUT_RLU) == LOW) 
                     {
-                        if(DoorCheck() && CriticalCheck())
+                        static bool DC, CC;
+                        DC = DoorCheck();
+                        CC = CriticalCheck();
+                        if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
                             Serial.println(" UP");
