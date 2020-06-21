@@ -276,19 +276,19 @@ void LiftOperation(void)
                 if ((TF >= 0) && (TF < CF))
                 {
                     Serial.print("      Motion Floor:");
-                    Serial.print(" DOWN");
+                    Serial.println(" DOWN");
                     taskVar_motorMode = RUNNING;
                 }
                 if ((TF >= 0) && (TF > CF))
                 {
                     Serial.print("      Motion Floor:");
-                    Serial.print(" UP");
+                    Serial.println(" UP");
                     taskVar_motorMode = RUNNING;
                 }
                 if ((TF >= 0) && (TF == CF))
                 {
                     Serial.print("      Motion Floor:");
-                    Serial.print(" REACHED");
+                    Serial.println(" REACHED");
                     taskVar_motorMode = WAITING;
                 }
             }
