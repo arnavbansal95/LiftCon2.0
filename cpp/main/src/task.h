@@ -19,6 +19,7 @@ typedef enum
 typedef enum
 {
     WAITING,
+    READY,
     RUNNING
 } motor_t;
 
