@@ -12,10 +12,11 @@ void Display(void)
     u8g.firstPage();  
     do 
     {
+        Serial.println(globalVar_mode);
         if(globalVar_mode == STARTUP)
         {
             StartupScreen();
-            delay(5000);
+            //delay(5000);
         }   
         if(globalVar_mode == SERVICE)
         {
