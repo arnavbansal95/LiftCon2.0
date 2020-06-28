@@ -3,18 +3,10 @@
 #include "inputs.h"
 #include "comms.h"
 #include "disp.h"
+#include "global_var.h"
 
 #ifndef TASK_H_
 #define TASK_H_
-
-typedef enum
-{
-    SERVICE,
-    MAINTENANCE,
-    RESET,
-    STARTUP,
-    BREAKDOWN
-} mode_t;
 
 typedef enum
 {
@@ -22,14 +14,6 @@ typedef enum
     READY,
     RUNNING
 } motor_t;
-
-typedef enum
-{
-    UP,
-    DOWN,
-    IDLE
-} motion_t;
-
 
 void CheckInterrupt(void);      // Checks Operation Conditions
 bool CriticalCheck(void);       // Checks Gravity Limit, Emergency Stop, VSP_D2 

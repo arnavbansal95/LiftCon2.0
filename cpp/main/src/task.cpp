@@ -58,6 +58,8 @@ bool CriticalCheck(void)
     {
         taskVar_mode = taskVar_mode_past;
     }
+    globalVar_mode = taskVar_mode;              // Display Method
+    globalVar_motion = taskVar_motorMotion;     // Display Method
     return(taskVar_Critical);
 }
 
