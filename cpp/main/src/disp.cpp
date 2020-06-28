@@ -12,7 +12,6 @@ void Display(void)
     u8g.firstPage();  
     do 
     {
-        Serial.println(globalVar_mode);
         if(globalVar_mode == STARTUP)
         {
             StartupScreen();
