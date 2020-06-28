@@ -8,24 +8,34 @@ void InitLCD(void)
 
 void Display(void)
 {
-    // static uint8_t x = 1;
-    u8g.firstPage();  
-    do 
+    if(globalVar_mode == STARTUP)
     {
-        if(globalVar_mode == STARTUP)
+        u8g.firstPage();  
+        do 
         {
             StartupScreen();
-            //delay(5000);
-        }   
-        if(globalVar_mode == SERVICE)
+        } while(u8g.nextPage());
+        delay(5000);
+    }   
+    if(globalVar_mode == SERVICE)
+    {
+        u8g.firstPage();  
+        do 
         {
             ServiceMode();
-        }
-        if(globalVar_mode == MAINTENANCE)
+        } while(u8g.nextPage());
+        delay(50);
+    }
+    if(globalVar_mode == MAINTENANCE)
+    {
+        u8g.firstPage();  
+        do 
         {
             MaintenanceMode();
-        }
-    } while(u8g.nextPage());
+        } while(u8g.nextPage());
+        delay(50);
+    }
+    
 }
 
 void BasicFrameNoLine(void)
@@ -79,6 +89,7 @@ void StartupScreen(void)
 void ServiceMode(void)
 {
     static char ch[16];
+    u8g.drawBitmap( 0, 0, 128, 240, screen);
     BasicFrame();
     u8g.setFont(u8g_font_helvB10);
     u8g.drawStr(15, 15, "      Service      ");

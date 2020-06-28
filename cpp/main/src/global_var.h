@@ -1,3 +1,5 @@
+#include "Arduino.h"
+
 #ifndef GLOBAL_VAR_H_
 #define GLOBAL_VAR_H_
 
