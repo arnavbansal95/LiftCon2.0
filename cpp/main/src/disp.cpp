@@ -8,6 +8,7 @@ void InitLCD(void)
 
 void Display(void)
 {
+    Serial.println(globalVar_mode);
     if(globalVar_mode == STARTUP)
     {
         u8g.firstPage();  
@@ -15,7 +16,7 @@ void Display(void)
         {
             StartupScreen();
         } while(u8g.nextPage());
-        delay(5000);
+        delay(50);
     }   
     if(globalVar_mode == SERVICE)
     {
