@@ -249,6 +249,7 @@ void LiftOperation(void)
                 if(DoorCheck() && CriticalCheck() && (ReadInput(INPUT_FL0) == LOW))
                 {
                     digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_FL0) & !ReadInput(INPUT_RLD)));
+                    taskVar_motorMotion = DOWN;
                 }
                 else
                 {
