@@ -19,11 +19,11 @@ bool CriticalCheck(void)
     taskVar_BkDnVar.ESP = ReadInput(INPUT_ESP);
     taskVar_BkDnVar.GRL = ReadInput(INPUT_GLS);
     taskVar_BkDnVar.VSP = ReadInput(INPUT_VSP);
+    setMode(&taskVar_mode);              // Display Method
+    setMotion(&taskVar_motorMotion);     // Display Method
+    setBkDn(taskVar_BkDnVar);            // Display Method
     if(taskVar_mode == STARTUP)
     {
-        setMode(&taskVar_mode);              // Display Method
-        setMotion(&taskVar_motorMotion);     // Display Method
-        setBkDn(taskVar_BkDnVar);            // Display Method
         if(taskVar_CriticalRes == LOW)
         {
             Serial.println(" Inital Critical Check: Passed ");
