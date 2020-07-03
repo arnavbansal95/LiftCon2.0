@@ -81,8 +81,8 @@ void CheckInterrupt(void)
                 if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
                 {
                     Serial.println("   Maintenance Mode Activated  ");
-                    while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
                     taskVar_mode = MAINTENANCE;
+                    while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
                 }
                 if((ReadInput(INPUT_RST) == LOW) && (taskVar_mode == SERVICE))
                 {
