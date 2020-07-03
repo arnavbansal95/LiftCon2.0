@@ -9,14 +9,21 @@ static const long      interval = 5000;                        // interval
 static int             target_floor = -1;                      // Target Floor Level  (-1 for No Pending Input)
 static int             current_floor = -1;                     // Current Floor Level (-1 for Undefined State)
 static motor_t         taskVar_motorMode = WAITING;            // W: Waiting for Operation, R: Running
-static motion_t        taskVar_motorMotion = IDLE;             // U: UP, D: DOWN, I: IDLE
+static motion_t        taskVar_motorMotion = IDLE;             // U: UP, D: DOWN, I: IDLE, H: HALT
+static BreakDown       taskVar_BkDnVar;                        // Stores BreakDown info for Display
 
 bool CriticalCheck(void)
 {
     static uint8_t taskVar_CriticalRes;
     taskVar_CriticalRes = ReadInput(INPUT_GLS) | ReadInput(INPUT_ESP) | ReadInput(INPUT_VSP); 
+    taskVar_BkDnVar.ESP = ReadInput(INPUT_ESP);
+    taskVar_BkDnVar.GRL = ReadInput(INPUT_GLS);
+    taskVar_BkDnVar.VSP = ReadInput(INPUT_VSP);
     if(taskVar_mode == STARTUP)
     {
+        setMode(&taskVar_mode);              // Display Method
+        setMotion(&taskVar_motorMotion);     // Display Method
+        setBkDn(taskVar_BkDnVar);            // Display Method
         if(taskVar_CriticalRes == LOW)
         {
             Serial.println(" Inital Critical Check: Passed ");
@@ -58,8 +65,6 @@ bool CriticalCheck(void)
     {
         taskVar_mode = taskVar_mode_past;
     }
-    getMode(&taskVar_mode);              // Display Method
-    getMotion(&taskVar_motorMotion);     // Display Method
     return(taskVar_Critical);
 }
 
@@ -130,6 +135,7 @@ bool DoorCheck(void)
     else
     {
         Serial.println("        Door Open: Error       ");
+        taskVar_motorMotion = HALT;
         return(false);
     }
     

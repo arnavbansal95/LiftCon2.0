@@ -1,11 +1,37 @@
 #include "global_var.h"
 
-void getMode(mode_t* mode)
+static mode_t* globalVar_mode;
+static motion_t* globalVar_motion;
+static BreakDown globalVar_BkDnVar;
+
+void setMode(mode_t* mode)
 {
-    globalVar_mode = *mode;
+    globalVar_mode = mode;
 }
 
-void getMotion(motion_t* motion)
+void setMotion(motion_t* motion)
 {
-    globalVar_motion = *motion;
+    globalVar_motion = motion;
+}
+
+void setBkDn(BreakDown BkDn)
+{
+    globalVar_BkDnVar.ESP = BkDn.ESP;
+    globalVar_BkDnVar.GRL = BkDn.GRL;
+    globalVar_BkDnVar.VSP = BkDn.VSP;
+}
+
+mode_t getMode(void)
+{
+    return(*globalVar_mode);
+}
+
+motion_t getMotion(void)
+{
+    return(*globalVar_motion);
+}
+
+BreakDown getBkDn(void)
+{
+    return(globalVar_BkDnVar);
 }

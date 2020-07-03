@@ -8,35 +8,55 @@ void InitLCD(void)
 
 void Display(void)
 {
-    Serial.println(globalVar_mode);
-    if(globalVar_mode == STARTUP)
+    int delayVar = 50;
+    dispVar_mode = getMode();
+    dispVar_motion = getMotion();
+    dispVar_BkDn = getBkDn();
+    if(dispVar_mode == STARTUP)
     {
         u8g.firstPage();  
         do 
         {
             StartupScreen();
         } while(u8g.nextPage());
-        delay(50);
+        delay(delayVar);
     }   
-    if(globalVar_mode == SERVICE)
+    if(dispVar_mode == SERVICE)
     {
         u8g.firstPage();  
         do 
         {
             ServiceMode();
         } while(u8g.nextPage());
-        delay(50);
+        delay(delayVar);
     }
-    if(globalVar_mode == MAINTENANCE)
+    if(dispVar_mode == MAINTENANCE)
     {
         u8g.firstPage();  
         do 
         {
             MaintenanceMode();
         } while(u8g.nextPage());
-        delay(50);
+        delay(delayVar);
     }
-    
+    if(dispVar_mode == BREAKDOWN)
+    {
+        u8g.firstPage();  
+        do 
+        {
+            BreakdownMode();
+        } while(u8g.nextPage());
+        delay(delayVar);
+    }
+    if(dispVar_mode == RESET)
+    {
+        u8g.firstPage();  
+        do 
+        {
+            ResetMode();
+        } while(u8g.nextPage());
+        delay(delayVar);
+    }
 }
 
 void BasicFrameNoLine(void)
@@ -73,6 +93,13 @@ void Motion(motion_t dir)
         u8g.drawStr(94, 50, "--");
         u8g.drawCircle(104, 40, 16);
         u8g.drawCircle(104, 40, 15);
+    }
+    if(dir == HALT)
+    {
+        u8g.setFont(u8g_font_helvB24);
+        u8g.drawStr(99, 53, "!");
+        u8g.drawCircle(104, 40, 16);
+        u8g.drawCircle(104, 40, 15); 
     }   
 }
 
@@ -89,52 +116,141 @@ void StartupScreen(void)
 
 void ServiceMode(void)
 {
-    static char ch[16];
-    u8g.drawBitmap( 0, 0, 128, 240, screen);
+    static char ch[18];
     BasicFrame();
     u8g.setFont(u8g_font_helvB10);
     u8g.drawStr(15, 15, "      Service      ");
+    Motion(dispVar_motion);
     u8g.setFont(u8g_font_04b_03);
     strcpy(ch, "Floor Status: 00");
     u8g.drawStr(4, 32, ch);
-    strcpy(ch, "Drive Motion: UP");
-    Motion(globalVar_motion);
-    u8g.drawStr(4, 44, ch);
+    if (dispVar_motion == HALT)
+    {
+        strcpy(ch, "Door Status: FLT");
+        u8g.drawStr(4, 44, ch);
+    }
     strcpy(ch, "Target Floor: 04");
     u8g.drawStr(4, 56, ch);
 }
 
 void MaintenanceMode(void)
 {
-    static char ch[16];
+    static char ch[18];
     BasicFrame();
     u8g.setFont(u8g_font_helvB10);
     u8g.drawStr(5, 15, "    Maintenance    ");
+    Motion(dispVar_motion);
     u8g.setFont(u8g_font_04b_03);
     strcpy(ch, "Floor Status: --");
     u8g.drawStr(4, 32, ch);
-    strcpy(ch, "Drive Motion: DN");
-    Motion(globalVar_motion);
-    u8g.drawStr(4, 44, ch);
-    strcpy(ch, "Target Floor: --");
-    u8g.drawStr(4, 56, ch);
+    if (dispVar_motion == UP)
+    {   
+        strcpy(ch, "Drive Motion: UP");
+        u8g.drawStr(4, 44, ch);
+        strcpy(ch, "Door Status: OK");
+        u8g.drawStr(4, 56, ch);
+    }
+    if (dispVar_motion == DOWN)
+    {
+        strcpy(ch, "Drive Motion: DN");
+        u8g.drawStr(4, 44, ch);
+        strcpy(ch, "Door Status: OK");
+        u8g.drawStr(4, 56, ch);
+    }
+    if (dispVar_motion == IDLE)
+    {
+        strcpy(ch, "Drive Motion: --");
+        u8g.drawStr(4, 44, ch);
+        strcpy(ch, "Door Status: OK");
+        u8g.drawStr(4, 56, ch);
+    }
+    if (dispVar_motion == HALT)
+    {
+        strcpy(ch, "Drive Motion: --");
+        u8g.drawStr(4, 44, ch);
+        strcpy(ch, "Door Status: FLT");
+        u8g.drawStr(4, 56, ch);
+    }
+}
+
+void ResetMode(void)
+{
+    static char ch[18];
+    BasicFrame();
+    u8g.setFont(u8g_font_helvB10);
+    u8g.drawStr(7, 15, "         Reset  ");
+    Motion(dispVar_motion);
+    u8g.setFont(u8g_font_04b_03);
+    strcpy(ch, "Floor Status: --");
+    u8g.drawStr(4, 32, ch);
+    if (dispVar_motion == UP)
+    {   
+        strcpy(ch, "Drive Motion: UP");
+        u8g.drawStr(4, 44, ch);
+        strcpy(ch, "Door Status: OK");
+        u8g.drawStr(4, 56, ch);
+    }
+    if (dispVar_motion == DOWN)
+    {
+        strcpy(ch, "Drive Motion: DN");
+        u8g.drawStr(4, 44, ch);
+        strcpy(ch, "Door Status: OK");
+        u8g.drawStr(4, 56, ch);
+    }
+    if (dispVar_motion == IDLE)
+    {
+        strcpy(ch, "Drive Motion: --");
+        u8g.drawStr(4, 44, ch);
+        strcpy(ch, "Door Status: OK");
+        u8g.drawStr(4, 56, ch);
+    }
+    if (dispVar_motion == HALT)
+    {
+        strcpy(ch, "Drive Motion: --");
+        u8g.drawStr(4, 44, ch);
+        strcpy(ch, "Door Status: FLT");
+        u8g.drawStr(4, 56, ch);
+    }
 }
 
 void BreakdownMode(void)
 {
-    static char ch[16];
+    static char ch[18];
+    static BreakDown dispVar_BkDnVar;
+    dispVar_BkDnVar = getBkDn();
     BasicFrame();
     u8g.setFont(u8g_font_helvB10);
     u8g.drawStr(5, 15, "     Breakdown     ");
-    u8g.setFont(u8g_font_helvB24);
-    u8g.drawStr(99, 53, "!");
-    u8g.drawCircle(104, 40, 16);
-    u8g.drawCircle(104, 40, 15); 
+    Motion(HALT);
     u8g.setFont(u8g_font_5x8);
-    strcpy(ch, "ESP: OK");
-    u8g.drawStr(4, 32, ch);
-    strcpy(ch, "GRL: FAULT");
-    u8g.drawStr(4, 44, ch);
-    strcpy(ch, "VSP: OK");
-    u8g.drawStr(4, 56, ch);
+    if(dispVar_BkDnVar.ESP == LOW)
+    {
+        strcpy(ch, "ESP: OK");
+        u8g.drawStr(4, 32, ch);
+    }
+    if(dispVar_BkDnVar.ESP == HIGH)
+    {
+        strcpy(ch, "ESP: FLT");
+        u8g.drawStr(4, 32, ch);
+    }
+    if(dispVar_BkDnVar.GRL == LOW)
+    {
+        strcpy(ch, "GRL: OK");
+        u8g.drawStr(4, 44, ch);
+    }
+    if(dispVar_BkDnVar.GRL == HIGH)
+    {
+        strcpy(ch, "GRL: FLT");
+        u8g.drawStr(4, 44, ch);
+    }
+    if(dispVar_BkDnVar.VSP == LOW)
+    {
+        strcpy(ch, "VSP: OK");
+        u8g.drawStr(4, 56, ch);
+    }
+    if(dispVar_BkDnVar.VSP == HIGH)
+    {
+        strcpy(ch, "VSP: FLT");
+        u8g.drawStr(4, 56, ch);
+    }
 }
