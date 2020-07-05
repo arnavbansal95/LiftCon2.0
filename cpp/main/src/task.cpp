@@ -82,6 +82,7 @@ void CheckInterrupt(void)
                 {
                     Serial.println("   Maintenance Mode Activated  ");
                     taskVar_mode = MAINTENANCE;
+                    previousMillis[1] = millis();
                     // while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
                 }
                 if((ReadInput(INPUT_RST) == LOW) && (taskVar_mode == SERVICE))
@@ -113,6 +114,7 @@ void CheckInterrupt(void)
                     Serial.println("     Service Mode Activated    ");
                     // while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
                     taskVar_mode = SERVICE;
+                    previousMillis[0] = millis();
                 }
             }
         }
