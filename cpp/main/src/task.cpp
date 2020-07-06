@@ -82,8 +82,7 @@ void CheckInterrupt(void)
                 {
                     Serial.println("   Maintenance Mode Activated  ");
                     taskVar_mode = MAINTENANCE;
-                    previousMillis[1] = millis();
-                    // while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
+                    previousMillis[1] = millis() + 2000;
                 }
                 if((ReadInput(INPUT_RST) == LOW) && (taskVar_mode == SERVICE))
                 {
@@ -112,9 +111,8 @@ void CheckInterrupt(void)
                 if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
                 {
                     Serial.println("     Service Mode Activated    ");
-                    // while((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW));
                     taskVar_mode = SERVICE;
-                    previousMillis[0] = millis();
+                    previousMillis[0] = millis() + 2000;
                 }
             }
         }
@@ -276,6 +274,7 @@ void LiftOperation(void)
                 if ((TF >= 0) && (TF != CF))
                 {
                     taskVar_motorMode = READY;
+                    taskVar_motorMotion = IDLE;
                 }
             }
             if((taskVar_motorMode == RUNNING) || (taskVar_motorMode == READY))
@@ -357,6 +356,7 @@ void LiftOperation(void)
                     }
                 }
             }
+            setFloor(&TF, &CF);
             delay(200);
         }
     }        

@@ -3,6 +3,7 @@
 static mode_t* globalVar_mode;
 static motion_t* globalVar_motion;
 static BreakDown globalVar_BkDnVar;
+static Floor globalVar_Floor;
 
 void setMode(mode_t* mode)
 {
@@ -19,6 +20,12 @@ void setBkDn(BreakDown BkDn)
     globalVar_BkDnVar.ESP = BkDn.ESP;
     globalVar_BkDnVar.GRL = BkDn.GRL;
     globalVar_BkDnVar.VSP = BkDn.VSP;
+}
+
+void setFloor(int* TF, int* CF)
+{
+    globalVar_Floor.CF = *CF;
+    globalVar_Floor.TF = *TF;
 }
 
 mode_t getMode(void)
