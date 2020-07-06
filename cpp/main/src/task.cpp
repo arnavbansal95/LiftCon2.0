@@ -11,6 +11,7 @@ static int             current_floor = -1;                     // Current Floor 
 static motor_t         taskVar_motorMode = WAITING;            // W: Waiting for Operation, R: Running
 static motion_t        taskVar_motorMotion = IDLE;             // U: UP, D: DOWN, I: IDLE, H: HALT
 static BreakDown       taskVar_BkDnVar;                        // Stores BreakDown info for Display
+static uint8_t         taskVar_changeOver = 0;                 // Changeover from Maintainence Mode to Service Mode
 
 bool CriticalCheck(void)
 {
@@ -70,7 +71,7 @@ bool CriticalCheck(void)
 
 void CheckInterrupt(void)
 {
-    if(taskVar_mode == SERVICE || taskVar_mode == RESET)
+    if(taskVar_mode == SERVICE || taskVar_mode == RESET || (taskVar_changeOver == 1))
     {   
         if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW) || (ReadInput(INPUT_RST) == LOW))
         {
@@ -80,9 +81,12 @@ void CheckInterrupt(void)
                 previousMillis[0] = currentMillis[0];
                 if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
                 {
-                    Serial.println("   Maintenance Mode Activated  ");
-                    taskVar_mode = MAINTENANCE;
-                    previousMillis[1] = millis() + 2000;
+                    if(taskVar_changeOver == 0)
+                    {
+                        Serial.println("   Maintenance Mode Activated  ");
+                        taskVar_mode = MAINTENANCE;
+                    }
+                    taskVar_changeOver = 1;
                 }
                 if((ReadInput(INPUT_RST) == LOW) && (taskVar_mode == SERVICE))
                 {
@@ -97,10 +101,10 @@ void CheckInterrupt(void)
         else
         {
             previousMillis[0] = millis();
+            taskVar_changeOver = 0;
         }
-        
     }
-    if(taskVar_mode == MAINTENANCE)
+    if(taskVar_mode == MAINTENANCE || taskVar_changeOver == 2)
     {
         if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
         {
@@ -110,15 +114,19 @@ void CheckInterrupt(void)
                 previousMillis[1] = currentMillis[1];
                 if((ReadInput(INPUT_BUP) == LOW) && (ReadInput(INPUT_BDN) == LOW))
                 {
-                    Serial.println("     Service Mode Activated    ");
-                    taskVar_mode = SERVICE;
-                    previousMillis[0] = millis() + 2000;
+                    if(taskVar_changeOver == 0)
+                    {
+                        Serial.println("     Service Mode Activated    ");
+                        taskVar_mode = SERVICE;
+                    }
+                    taskVar_changeOver = 2;
                 }
             }
         }
         else
         {
             previousMillis[1] = millis();
+            taskVar_changeOver = 0;
         }
     }
 }
