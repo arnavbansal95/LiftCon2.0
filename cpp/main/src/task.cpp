@@ -282,8 +282,8 @@ void LiftOperation(void)
                 if ((TF >= 0) && (TF != CF))
                 {
                     taskVar_motorMode = READY;
-                    taskVar_motorMotion = IDLE;
                 }
+                taskVar_motorMotion = IDLE;
             }
             if((taskVar_motorMode == RUNNING) || (taskVar_motorMode == READY))
             {
