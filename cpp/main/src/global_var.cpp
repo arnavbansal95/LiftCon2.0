@@ -42,3 +42,8 @@ BreakDown getBkDn(void)
 {
     return(globalVar_BkDnVar);
 }
+
+Floor getFloor(void)
+{
+    return(globalVar_Floor);
+}

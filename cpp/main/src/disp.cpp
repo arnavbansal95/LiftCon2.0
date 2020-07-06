@@ -8,11 +8,12 @@ void InitLCD(void)
 
 void Display(void)
 {
-    int delayVar = 50;
+    static int delayVar = 50;
     dispVar_mode = getMode();
     dispVar_motion = getMotion();
     dispVar_BkDn = getBkDn();
-    if(dispVar_mode == STARTUP)
+    dispVar_Floor = getFloor();
+    if(dispVar_mode == STARTUP || dispVar_mode > 10)
     {
         u8g.firstPage();  
         do 
@@ -122,15 +123,54 @@ void ServiceMode(void)
     u8g.drawStr(15, 15, "      Service      ");
     Motion(dispVar_motion);
     u8g.setFont(u8g_font_04b_03);
-    strcpy(ch, "Floor Status: 00");
-    u8g.drawStr(4, 32, ch);
+    if(dispVar_Floor.CF != -1)
+    {
+        strcpy(ch, "Floor Status: --");
+        if(dispVar_Floor.CF < 10)
+        {
+            ch[15] = (dispVar_Floor.CF) + '0';
+        }
+        else
+        {
+            ch[14] = ((dispVar_Floor.CF % 100) / 10) + '0';
+            ch[15] = (dispVar_Floor.CF % 10) + '0';
+        }
+        u8g.drawStr(4, 32, ch);
+    }
+    if(dispVar_Floor.CF == -1)
+    {
+        strcpy(ch, "Floor Status: --");
+        u8g.drawStr(4, 32, ch);    
+    }
+    if (dispVar_motion != HALT)
+    {
+        strcpy(ch, "Door Status: OK");
+        u8g.drawStr(4, 44, ch);
+    }
     if (dispVar_motion == HALT)
     {
         strcpy(ch, "Door Status: FLT");
         u8g.drawStr(4, 44, ch);
     }
-    strcpy(ch, "Target Floor: 04");
-    u8g.drawStr(4, 56, ch);
+    if(dispVar_Floor.TF != -1)
+    {
+        strcpy(ch, "Target Floor: --");
+        if(dispVar_Floor.TF < 10)
+        {
+            ch[15] = (dispVar_Floor.TF) + '0';
+        }
+        else
+        {
+            ch[14] = ((dispVar_Floor.TF % 100) / 10) + '0';
+            ch[15] = (dispVar_Floor.TF % 10) + '0';
+        }
+        u8g.drawStr(4, 56, ch);
+    }
+    if(dispVar_Floor.TF == -1)
+    {
+        strcpy(ch, "Target Floor: --");
+        u8g.drawStr(4, 56, ch);
+    }
 }
 
 void MaintenanceMode(void)
@@ -141,8 +181,25 @@ void MaintenanceMode(void)
     u8g.drawStr(5, 15, "    Maintenance    ");
     Motion(dispVar_motion);
     u8g.setFont(u8g_font_04b_03);
-    strcpy(ch, "Floor Status: --");
-    u8g.drawStr(4, 32, ch);
+    if(dispVar_Floor.CF != -1)
+    {
+        strcpy(ch, "Floor Status: --");
+        if(dispVar_Floor.CF < 10)
+        {
+            ch[15] = (dispVar_Floor.CF) + '0';
+        }
+        else
+        {
+            ch[14] = ((dispVar_Floor.CF % 100) / 10) + '0';
+            ch[15] = (dispVar_Floor.CF % 10) + '0';
+        }
+        u8g.drawStr(4, 32, ch);
+    }
+    if(dispVar_Floor.CF == -1)
+    {
+        strcpy(ch, "Floor Status: --");
+        u8g.drawStr(4, 32, ch);    
+    }
     if (dispVar_motion == UP)
     {   
         strcpy(ch, "Drive Motion: UP");
@@ -181,8 +238,25 @@ void ResetMode(void)
     u8g.drawStr(7, 15, "         Reset  ");
     Motion(dispVar_motion);
     u8g.setFont(u8g_font_04b_03);
-    strcpy(ch, "Floor Status: --");
-    u8g.drawStr(4, 32, ch);
+    if(dispVar_Floor.CF != -1)
+    {
+        strcpy(ch, "Floor Status: --");
+        if(dispVar_Floor.CF < 10)
+        {
+            ch[15] = (dispVar_Floor.CF) + '0';
+        }
+        else
+        {
+            ch[14] = ((dispVar_Floor.CF % 100) / 10) + '0';
+            ch[15] = (dispVar_Floor.CF % 10) + '0';
+        }
+        u8g.drawStr(4, 32, ch);
+    }
+    if(dispVar_Floor.CF == -1)
+    {
+        strcpy(ch, "Floor Status: --");
+        u8g.drawStr(4, 32, ch);    
+    }
     if (dispVar_motion == UP)
     {   
         strcpy(ch, "Drive Motion: UP");
@@ -215,6 +289,7 @@ void ResetMode(void)
 
 void BreakdownMode(void)
 {
+    int x = 28;
     static char ch[18];
     static BreakDown dispVar_BkDnVar;
     dispVar_BkDnVar = getBkDn();

@@ -14,6 +14,7 @@ static U8GLIB_ST7920_128X64_1X u8g(GR_LCD_E, GR_LCD_RW, GR_LCD_RS);
 static mode_t       dispVar_mode;
 static motion_t     dispVar_motion;
 static BreakDown    dispVar_BkDn;
+static Floor        dispVar_Floor;
 
 void InitLCD(void);                             // Initialize LCD
 void Display(void);                             // Main Display Function 
