@@ -273,6 +273,9 @@ void LiftOperation(void)
             static int CF;    
             if(taskVar_motorMode == WAITING)
             {
+                static bool DC, CC;
+                DC = DoorCheck();
+                CC = CriticalCheck();
                 TF = GetTargetFloor();
                 CF = GetCurrentFloor();
                 Serial.print("      Target Floor:");
@@ -283,7 +286,10 @@ void LiftOperation(void)
                 {
                     taskVar_motorMode = READY;
                 }
-                taskVar_motorMotion = IDLE;
+                if(DC && CC)
+                {
+                    taskVar_motorMotion = IDLE;
+                }
             }
             if((taskVar_motorMode == RUNNING) || (taskVar_motorMode == READY))
             {
