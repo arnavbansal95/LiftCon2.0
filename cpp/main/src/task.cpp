@@ -227,9 +227,10 @@ void LiftOperation(void)
         {
             if(ReadInput(INPUT_BUP) == ReadInput(INPUT_BDN))
             {
-                digitalWrite(OUTPUT2_UPM, LOW);
-                digitalWrite(OUTPUT2_DNM, LOW);
+                //digitalWrite(OUTPUT2_UPM, LOW);
+                //digitalWrite(OUTPUT2_DNM, LOW);
                 taskVar_motorMotion = IDLE;
+                OutputMotion(taskVar_motorMotion);
             }
             else
             {
@@ -238,13 +239,15 @@ void LiftOperation(void)
                     delay(100);
                     if(ReadInput(INPUT_BUP) == LOW)
                     {
-                        digitalWrite(OUTPUT2_UPM, (!ReadInput(INPUT_BUP) & !ReadInput(INPUT_RLU)));
+                        //digitalWrite(OUTPUT2_UPM, (!ReadInput(INPUT_BUP) & !ReadInput(INPUT_RLU)));
                         taskVar_motorMotion = UP;
+                        OutputMotion(taskVar_motorMotion);
                     }
                     if(ReadInput(INPUT_BDN) == LOW)
                     {
-                        digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_BDN) & !ReadInput(INPUT_RLD)));
+                        //digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_BDN) & !ReadInput(INPUT_RLD)));
                         taskVar_motorMotion = DOWN;
+                        OutputMotion(taskVar_motorMotion);
                     }
                 }
             }
@@ -256,8 +259,9 @@ void LiftOperation(void)
             {
                 if(DoorCheck() && CriticalCheck() && (ReadInput(INPUT_FL0) == LOW))
                 {
-                    digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_FL0) & !ReadInput(INPUT_RLD)));
+                    //digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_FL0) & !ReadInput(INPUT_RLD)));
                     taskVar_motorMotion = DOWN;
+                    OutputMotion(taskVar_motorMotion);
                 }
                 else
                 {
@@ -308,10 +312,11 @@ void LiftOperation(void)
                 {
                     Serial.print("      Motion Floor:");
                     Serial.println(" REACHED");
-                    digitalWrite(OUTPUT2_UPM, LOW);
-                    digitalWrite(OUTPUT2_DNM, LOW);
+                    //digitalWrite(OUTPUT2_UPM, LOW);
+                    //digitalWrite(OUTPUT2_DNM, LOW);
                     taskVar_motorMode = WAITING;
                     taskVar_motorMotion = IDLE;
+                    OutputMotion(taskVar_motorMotion);
                 }
                 if (((TF >= 0) && (TF < CF) && (taskVar_motorMode == READY)) || ((taskVar_motorMotion == DOWN) && (taskVar_motorMode = RUNNING)))
                 {
@@ -321,24 +326,27 @@ void LiftOperation(void)
                         {
                             Serial.print("      Motion Floor:");
                             Serial.println(" DOWN");
-                            digitalWrite(OUTPUT2_UPM, LOW);
-                            digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_RLD));
+                            //digitalWrite(OUTPUT2_UPM, LOW);
+                            //digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_RLD));
                             taskVar_motorMode = RUNNING;
                             taskVar_motorMotion = DOWN;
+                            OutputMotion(taskVar_motorMotion);
                         }
                         else
                         {
-                            digitalWrite(OUTPUT2_UPM, LOW);
-                            digitalWrite(OUTPUT2_DNM, LOW);
+                            //digitalWrite(OUTPUT2_UPM, LOW);
+                            //digitalWrite(OUTPUT2_DNM, LOW);
+                            OutputMotion(HALT);
                         }
                     }
                     else
                     {
                         // Undefined State, take Notice
-                        digitalWrite(OUTPUT2_UPM, LOW);
-                        digitalWrite(OUTPUT2_DNM, LOW);
+                        //digitalWrite(OUTPUT2_UPM, LOW);
+                        //digitalWrite(OUTPUT2_DNM, LOW);
                         taskVar_motorMode = WAITING;
                         taskVar_motorMotion = IDLE;
+                        OutputMotion(taskVar_motorMotion);
                     }
                 }
                 if (((TF >= 0) && (TF > CF) && (taskVar_motorMode == READY)) || ((taskVar_motorMotion == UP) && (taskVar_motorMode = RUNNING)))
@@ -349,24 +357,27 @@ void LiftOperation(void)
                         {
                             Serial.print("      Motion Floor:");
                             Serial.println(" UP");
-                            digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_RLU));
-                            digitalWrite(OUTPUT2_DNM, LOW);
+                            //digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_RLU));
+                            //digitalWrite(OUTPUT2_DNM, LOW);
                             taskVar_motorMode = RUNNING;
                             taskVar_motorMotion = UP;
+                            OutputMotion(taskVar_motorMotion);
                         }
                         else
                         {
-                            digitalWrite(OUTPUT2_UPM, LOW);
-                            digitalWrite(OUTPUT2_DNM, LOW);
+                            //digitalWrite(OUTPUT2_UPM, LOW);
+                            //digitalWrite(OUTPUT2_DNM, LOW);
+                            OutputMotion(HALT);
                         }
                     }
                     else
                     {
                         // Undefined State, take Notice
-                        digitalWrite(OUTPUT2_UPM, LOW);
-                        digitalWrite(OUTPUT2_DNM, LOW);
+                        //digitalWrite(OUTPUT2_UPM, LOW);
+                        //digitalWrite(OUTPUT2_DNM, LOW);
                         taskVar_motorMode = WAITING;
                         taskVar_motorMotion = IDLE;
+                        OutputMotion(taskVar_motorMotion);
                     }
                 }
             }

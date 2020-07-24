@@ -1,4 +1,6 @@
 #include "Arduino.h"
+#include "global_var.h"
+#include "inputs.h"
 
 #ifndef OUTPUTS_H_
 #define OUTPUTS_H_
@@ -25,6 +27,8 @@
 #define OUTPUT2_UPM  31     // Up Motion
 #define OUTPUT2_MCN  33     // Main Contactor
 
-void InitOutputs(void);              // Initialize Outputs
+
+void InitOutputs(void);                 // Initialize Outputs
+void OutputMotion(motion_t smVar);      // Set Motion for Motor
 
 #endif
