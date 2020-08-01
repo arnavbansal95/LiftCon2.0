@@ -289,6 +289,7 @@ void LiftOperation(void)
                 if((TF < 0) && (CF < 0))
                 {
                     Serial.println("    Undefined State");
+                    taskVar_motorMode = WAITING;
                 }
                 else
                 {
