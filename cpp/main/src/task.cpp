@@ -316,6 +316,11 @@ void LiftOperation(void)
                     {
                         DC = DoorCheck();
                         CC = CriticalCheck();
+                        if((DC == false) || (CC == false))
+                        {   
+                            Serial.println("Door Open Clause Active in Loop");
+                            OutputMotion(HALT);
+                        }
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
@@ -323,11 +328,6 @@ void LiftOperation(void)
                             taskVar_motorMode = RUNNING;
                             taskVar_motorMotion = DOWN;
                             OutputMotion(taskVar_motorMotion, taskVar_mode);
-                        }
-                        else
-                        {   
-                            Serial.println("Door Open Clause Active in Loop");
-                            OutputMotion(HALT);
                         }
                     }
                     else
@@ -344,6 +344,11 @@ void LiftOperation(void)
                     {
                         DC = DoorCheck();
                         CC = CriticalCheck();
+                        if((DC == false) || (CC == false))
+                        {   
+                            Serial.println("Door Open Clause Active in Loop");
+                            OutputMotion(HALT);
+                        }
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
@@ -351,11 +356,6 @@ void LiftOperation(void)
                             taskVar_motorMode = RUNNING;
                             taskVar_motorMotion = UP;
                             OutputMotion(taskVar_motorMotion, taskVar_mode);
-                        }
-                        else
-                        {
-                            Serial.println("Door Open Clause Active in Loop");
-                            OutputMotion(HALT);
                         }
                     }
                     else
