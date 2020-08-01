@@ -14,24 +14,36 @@ void InitOutputs()
     }
 }
 
-void OutputMotion(motion_t smVar = HALT)
+void OutputMotion(motion_t smVar = HALT, mode_t mdVar = STARTUP)
 {
     if((smVar == HALT) || (smVar == IDLE))
     {
-        Serial.println("HALT/IDLE");
         digitalWrite(OUTPUT2_UPM, LOW);
         digitalWrite(OUTPUT2_DNM, LOW);
     }
-    if(smVar == UP)
+    if((smVar == UP) && (mdVar == MAINTENANCE))
     {
-        Serial.println("UP");
         digitalWrite(OUTPUT2_DNM, LOW);
         digitalWrite(OUTPUT2_UPM, (!ReadInput(INPUT_BUP) & !ReadInput(INPUT_RLU)));
     }
-    if(smVar == DOWN)
+    if((smVar == DOWN) && (mdVar == MAINTENANCE))
     {
-        Serial.println("DOWN");
         digitalWrite(OUTPUT2_UPM, LOW);
         digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_BDN) & !ReadInput(INPUT_RLD)));
+    }
+    if((smVar == DOWN) && (mdVar == RESET))
+    {
+        digitalWrite(OUTPUT2_UPM, LOW);
+        digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_FL0) & !ReadInput(INPUT_RLD)));
+    }
+    if((smVar == UP) && (mdVar == SERVICE))
+    {
+        digitalWrite(OUTPUT2_DNM, LOW);
+        digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_RLU));
+    }
+    if((smVar == DOWN) && (mdVar == SERVICE))
+    {
+        digitalWrite(OUTPUT2_UPM, LOW);
+        digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_RLD));
     }
 }

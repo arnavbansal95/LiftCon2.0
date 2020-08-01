@@ -228,10 +228,8 @@ void LiftOperation(void)
         {
             if(ReadInput(INPUT_BUP) == ReadInput(INPUT_BDN))
             {
-                //digitalWrite(OUTPUT2_UPM, LOW);
-                //digitalWrite(OUTPUT2_DNM, LOW);
                 taskVar_motorMotion = IDLE;
-                OutputMotion(taskVar_motorMotion);
+                OutputMotion(taskVar_motorMotion, taskVar_mode);
             }
             else
             {
@@ -242,13 +240,13 @@ void LiftOperation(void)
                     {
                         //digitalWrite(OUTPUT2_UPM, (!ReadInput(INPUT_BUP) & !ReadInput(INPUT_RLU)));
                         taskVar_motorMotion = UP;
-                        OutputMotion(taskVar_motorMotion);
+                        OutputMotion(taskVar_motorMotion, taskVar_mode);
                     }
                     if(ReadInput(INPUT_BDN) == LOW)
                     {
                         //digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_BDN) & !ReadInput(INPUT_RLD)));
                         taskVar_motorMotion = DOWN;
-                        OutputMotion(taskVar_motorMotion);
+                        OutputMotion(taskVar_motorMotion, taskVar_mode);
                     }
                 }
             }
@@ -262,7 +260,7 @@ void LiftOperation(void)
                 {
                     //digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_FL0) & !ReadInput(INPUT_RLD)));
                     taskVar_motorMotion = DOWN;
-                    OutputMotion(taskVar_motorMotion);
+                    OutputMotion(taskVar_motorMotion, taskVar_mode);
                 }
                 else
                 {
@@ -331,7 +329,7 @@ void LiftOperation(void)
                             //digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_RLD));
                             taskVar_motorMode = RUNNING;
                             taskVar_motorMotion = DOWN;
-                            OutputMotion(taskVar_motorMotion);
+                            OutputMotion(taskVar_motorMotion, taskVar_mode);
                         }
                         else
                         {
@@ -362,7 +360,7 @@ void LiftOperation(void)
                             //digitalWrite(OUTPUT2_DNM, LOW);
                             taskVar_motorMode = RUNNING;
                             taskVar_motorMotion = UP;
-                            OutputMotion(taskVar_motorMotion);
+                            OutputMotion(taskVar_motorMotion, taskVar_mode);
                         }
                         else
                         {
