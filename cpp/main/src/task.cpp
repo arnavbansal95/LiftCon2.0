@@ -238,13 +238,11 @@ void LiftOperation(void)
                     delay(100);
                     if(ReadInput(INPUT_BUP) == LOW)
                     {
-                        //digitalWrite(OUTPUT2_UPM, (!ReadInput(INPUT_BUP) & !ReadInput(INPUT_RLU)));
                         taskVar_motorMotion = UP;
                         OutputMotion(taskVar_motorMotion, taskVar_mode);
                     }
                     if(ReadInput(INPUT_BDN) == LOW)
                     {
-                        //digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_BDN) & !ReadInput(INPUT_RLD)));
                         taskVar_motorMotion = DOWN;
                         OutputMotion(taskVar_motorMotion, taskVar_mode);
                     }
@@ -258,7 +256,6 @@ void LiftOperation(void)
             {
                 if(DoorCheck() && CriticalCheck() && (ReadInput(INPUT_FL0) == LOW))
                 {
-                    //digitalWrite(OUTPUT2_DNM, (!ReadInput(INPUT_FL0) & !ReadInput(INPUT_RLD)));
                     taskVar_motorMotion = DOWN;
                     OutputMotion(taskVar_motorMotion, taskVar_mode);
                 }
@@ -311,8 +308,6 @@ void LiftOperation(void)
                 {
                     Serial.print("      Motion Floor:");
                     Serial.println(" REACHED");
-                    //digitalWrite(OUTPUT2_UPM, LOW);
-                    //digitalWrite(OUTPUT2_DNM, LOW);
                     taskVar_motorMode = WAITING;
                     taskVar_motorMotion = IDLE;
                     OutputMotion(taskVar_motorMotion);
@@ -325,24 +320,19 @@ void LiftOperation(void)
                         {
                             Serial.print("      Motion Floor:");
                             Serial.println(" DOWN");
-                            //digitalWrite(OUTPUT2_UPM, LOW);
-                            //digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_RLD));
                             taskVar_motorMode = RUNNING;
                             taskVar_motorMotion = DOWN;
                             OutputMotion(taskVar_motorMotion, taskVar_mode);
                         }
                         else
-                        {
-                            //digitalWrite(OUTPUT2_UPM, LOW);
-                            //digitalWrite(OUTPUT2_DNM, LOW);
+                        {   
+                            Serial.println("Door Open Clause Active in Loop");
                             OutputMotion(HALT);
                         }
                     }
                     else
                     {
                         // Undefined State, take Notice
-                        //digitalWrite(OUTPUT2_UPM, LOW);
-                        //digitalWrite(OUTPUT2_DNM, LOW);
                         taskVar_motorMode = WAITING;
                         taskVar_motorMotion = IDLE;
                         OutputMotion(taskVar_motorMotion);
@@ -356,24 +346,19 @@ void LiftOperation(void)
                         {
                             Serial.print("      Motion Floor:");
                             Serial.println(" UP");
-                            //digitalWrite(OUTPUT2_UPM, !ReadInput(INPUT_RLU));
-                            //digitalWrite(OUTPUT2_DNM, LOW);
                             taskVar_motorMode = RUNNING;
                             taskVar_motorMotion = UP;
                             OutputMotion(taskVar_motorMotion, taskVar_mode);
                         }
                         else
                         {
-                            //digitalWrite(OUTPUT2_UPM, LOW);
-                            //digitalWrite(OUTPUT2_DNM, LOW);
+                            Serial.println("Door Open Clause Active in Loop");
                             OutputMotion(HALT);
                         }
                     }
                     else
                     {
                         // Undefined State, take Notice
-                        //digitalWrite(OUTPUT2_UPM, LOW);
-                        //digitalWrite(OUTPUT2_DNM, LOW);
                         taskVar_motorMode = WAITING;
                         taskVar_motorMotion = IDLE;
                         OutputMotion(taskVar_motorMotion);
