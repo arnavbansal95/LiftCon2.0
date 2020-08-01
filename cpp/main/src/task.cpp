@@ -282,17 +282,20 @@ void LiftOperation(void)
                 Serial.println(TF);
                 Serial.print("      Current Floor:");
                 Serial.println(CF);
-                if((TF < 0) && (CF < 0))
-                {
-                    Serial.println("Undefined State");
-                }
-                if ((TF >= 0) && (TF != CF))
-                {
-                    taskVar_motorMode = READY;
-                }
                 if(DC && CC)
                 {
                     taskVar_motorMotion = IDLE;
+                }
+                if((TF < 0) && (CF < 0))
+                {
+                    Serial.println("    Undefined State");
+                }
+                else
+                {
+                    if ((TF >= 0) && (TF != CF))
+                    {
+                        taskVar_motorMode = READY;
+                    }       
                 }
             }
             if((taskVar_motorMode == RUNNING) || (taskVar_motorMode == READY))
