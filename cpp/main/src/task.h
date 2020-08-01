@@ -4,6 +4,7 @@
 #include "comms.h"
 #include "disp.h"
 #include "global_var.h"
+#include "time.h"
 
 #ifndef TASK_H_
 #define TASK_H_

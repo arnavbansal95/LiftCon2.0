@@ -129,6 +129,7 @@ void CheckInterrupt(void)
             taskVar_changeOver = 0;
         }
     }
+    SetTime();
 }
 
 bool DoorCheck(void)

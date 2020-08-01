@@ -9,7 +9,8 @@ typedef enum
     MAINTENANCE,
     RESET,
     STARTUP,
-    BREAKDOWN
+    BREAKDOWN,
+    SHUTDOWN
 } mode_t;
 
 typedef enum

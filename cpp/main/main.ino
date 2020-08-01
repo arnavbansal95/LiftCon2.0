@@ -15,6 +15,7 @@ void setup()
   InitComms();
   InitInputs();
   InitOutputs();
+  InitTime();
   
   main_currentMillis = millis();
   while(main_currentMillis - main_previousMillis <= 10000)
