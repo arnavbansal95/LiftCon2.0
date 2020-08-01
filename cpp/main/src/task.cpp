@@ -316,7 +316,10 @@ void LiftOperation(void)
                     {
                         DC = DoorCheck();
                         CC = CriticalCheck();
-                        Serial.println(DC && CC);
+                        if(!DC || !CC)
+                        {
+                            Serial.println(!DC || !CC);
+                        }
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
@@ -340,7 +343,10 @@ void LiftOperation(void)
                     {
                         DC = DoorCheck();
                         CC = CriticalCheck();
-                        Serial.println(DC && CC);
+                        if(!DC || !CC)
+                        {
+                            Serial.println(!DC || !CC);
+                        }
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
