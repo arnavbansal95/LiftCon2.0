@@ -316,7 +316,6 @@ void LiftOperation(void)
                     {
                         DC = DoorCheck();
                         CC = CriticalCheck();
-                        Serial.println(DC && CC);
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
@@ -324,6 +323,10 @@ void LiftOperation(void)
                             taskVar_motorMode = RUNNING;
                             taskVar_motorMotion = DOWN;
                             OutputMotion(taskVar_motorMotion, taskVar_mode);
+                        }
+                        else
+                        {
+                            OutputMotion(HALT);
                         }
                     }
                     else
@@ -340,7 +343,6 @@ void LiftOperation(void)
                     {
                         DC = DoorCheck();
                         CC = CriticalCheck();
-                        Serial.println(DC && CC);
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
@@ -348,6 +350,10 @@ void LiftOperation(void)
                             taskVar_motorMode = RUNNING;
                             taskVar_motorMotion = UP;
                             OutputMotion(taskVar_motorMotion, taskVar_mode);
+                        }
+                        else
+                        {
+                            OutputMotion(HALT);
                         }
                     }
                     else
