@@ -28,7 +28,7 @@
 #define OUTPUT2_MCN  33     // Main Contactor
 
 
-void InitOutputs(void);                 // Initialize Outputs
-void OutputMotion(motion_t smVar);      // Set Motion for Motor
+void InitOutputs(void);                                         // Initialize Outputs
+void OutputMotion(motion_t smVar, mode_t mdVar = STARTUP);      // Set Motion for Motor
 
 #endif
