@@ -144,7 +144,7 @@ bool DoorCheck(void)
     else
     {
         Serial.println("        Door Open: Error       ");
-        taskVar_motorMotion = HALT;
+        //taskVar_motorMotion = HALT;
         return(false);
     }
     
@@ -316,10 +316,7 @@ void LiftOperation(void)
                     {
                         DC = DoorCheck();
                         CC = CriticalCheck();
-                        if(!DC || !CC)
-                        {
-                            Serial.println(!DC || !CC);
-                        }
+                        Serial.println(DC && CC);
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
@@ -343,10 +340,7 @@ void LiftOperation(void)
                     {
                         DC = DoorCheck();
                         CC = CriticalCheck();
-                        if(!DC || !CC)
-                        {
-                            Serial.println(!DC || !CC);
-                        }
+                        Serial.println(DC && CC);
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
