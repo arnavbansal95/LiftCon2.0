@@ -294,8 +294,6 @@ void LiftOperation(void)
             if((taskVar_motorMode == RUNNING) || (taskVar_motorMode == READY))
             {
                 static bool DC, CC;
-                DC = DoorCheck();
-                CC = CriticalCheck();
                 CF = GetCurrentFloor();
                 if (taskVar_motorMode == READY)
                 {
@@ -316,6 +314,8 @@ void LiftOperation(void)
                 {
                     if(ReadInput(INPUT_RLD) == LOW)
                     {
+                        DC = DoorCheck();
+                        CC = CriticalCheck();
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
@@ -342,6 +342,8 @@ void LiftOperation(void)
                 {
                     if(ReadInput(INPUT_RLU) == LOW) 
                     {
+                        DC = DoorCheck();
+                        CC = CriticalCheck();
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
