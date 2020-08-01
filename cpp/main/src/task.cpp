@@ -316,11 +316,7 @@ void LiftOperation(void)
                     {
                         DC = DoorCheck();
                         CC = CriticalCheck();
-                        if((DC == false) || (CC == false))
-                        {   
-                            Serial.println("Door Open Clause Active in Loop");
-                            OutputMotion(HALT);
-                        }
+                        Serial.println(DC && CC);
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
@@ -344,11 +340,7 @@ void LiftOperation(void)
                     {
                         DC = DoorCheck();
                         CC = CriticalCheck();
-                        if((DC == false) || (CC == false))
-                        {   
-                            Serial.println("Door Open Clause Active in Loop");
-                            OutputMotion(HALT);
-                        }
+                        Serial.println(DC && CC);
                         if(DC && CC)
                         {
                             Serial.print("      Motion Floor:");
