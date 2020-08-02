@@ -89,7 +89,7 @@ void Motion(motion_t dir)
     {
         u8g.drawTriangle(122,25, 86,25, 104,56);    // DOWN
     }
-    if(dir == IDLE)
+    if((dir == IDLE) && (!getDoorStatus()))
     {
         u8g.setFont(u8g_font_helvB24);
         u8g.drawStr(94, 50, "--");
