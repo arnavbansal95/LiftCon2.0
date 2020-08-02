@@ -96,13 +96,14 @@ void Motion(motion_t dir)
         u8g.drawCircle(104, 40, 16);
         u8g.drawCircle(104, 40, 15);
     }
-    if(dir == HALT)
+    if((dir == HALT) || (!getDoorStatus()))
     {
         u8g.setFont(u8g_font_helvB24);
         u8g.drawStr(99, 53, "!");
         u8g.drawCircle(104, 40, 16);
         u8g.drawCircle(104, 40, 15); 
-    }   
+    }
+
 }
 
 void StartupScreen(void)
