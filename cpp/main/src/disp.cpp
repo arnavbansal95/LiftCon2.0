@@ -13,6 +13,7 @@ void Display(void)
     dispVar_motion = getMotion();
     dispVar_BkDn = getBkDn();
     dispVar_Floor = getFloor();
+    dispVar_doorStatus = getDoorStatus();
     if(dispVar_mode == STARTUP || dispVar_mode > 10)
     {
         u8g.firstPage();  
@@ -142,12 +143,12 @@ void ServiceMode(void)
         strcpy(ch, "Floor Status: --");
         u8g.drawStr(4, 32, ch);    
     }
-    if (dispVar_motion != HALT)
+    if(dispVar_doorStatus)
     {
         strcpy(ch, "Door Status: OK");
         u8g.drawStr(4, 44, ch);
     }
-    if (dispVar_motion == HALT)
+    if(!dispVar_doorStatus)
     {
         strcpy(ch, "Door Status: FLT");
         u8g.drawStr(4, 44, ch);
@@ -204,27 +205,29 @@ void MaintenanceMode(void)
     {   
         strcpy(ch, "Drive Motion: UP");
         u8g.drawStr(4, 44, ch);
-        strcpy(ch, "Door Status: OK");
-        u8g.drawStr(4, 56, ch);
     }
     if (dispVar_motion == DOWN)
     {
         strcpy(ch, "Drive Motion: DN");
         u8g.drawStr(4, 44, ch);
-        strcpy(ch, "Door Status: OK");
-        u8g.drawStr(4, 56, ch);
     }
     if (dispVar_motion == IDLE)
     {
         strcpy(ch, "Drive Motion: --");
         u8g.drawStr(4, 44, ch);
-        strcpy(ch, "Door Status: OK");
-        u8g.drawStr(4, 56, ch);
     }
     if (dispVar_motion == HALT)
     {
         strcpy(ch, "Drive Motion: --");
         u8g.drawStr(4, 44, ch);
+    }
+    if(dispVar_doorStatus)
+    {
+        strcpy(ch, "Door Status: OK");
+        u8g.drawStr(4, 56, ch);
+    }
+    if(!dispVar_doorStatus)
+    {
         strcpy(ch, "Door Status: FLT");
         u8g.drawStr(4, 56, ch);
     }
@@ -261,27 +264,29 @@ void ResetMode(void)
     {   
         strcpy(ch, "Drive Motion: UP");
         u8g.drawStr(4, 44, ch);
-        strcpy(ch, "Door Status: OK");
-        u8g.drawStr(4, 56, ch);
     }
     if (dispVar_motion == DOWN)
     {
         strcpy(ch, "Drive Motion: DN");
         u8g.drawStr(4, 44, ch);
-        strcpy(ch, "Door Status: OK");
-        u8g.drawStr(4, 56, ch);
     }
     if (dispVar_motion == IDLE)
     {
         strcpy(ch, "Drive Motion: --");
         u8g.drawStr(4, 44, ch);
-        strcpy(ch, "Door Status: OK");
-        u8g.drawStr(4, 56, ch);
     }
     if (dispVar_motion == HALT)
     {
         strcpy(ch, "Drive Motion: --");
         u8g.drawStr(4, 44, ch);
+    }
+    if(dispVar_doorStatus)
+    {
+        strcpy(ch, "Door Status: OK");
+        u8g.drawStr(4, 56, ch);
+    }
+    if(!dispVar_doorStatus)
+    {
         strcpy(ch, "Door Status: FLT");
         u8g.drawStr(4, 56, ch);
     }

@@ -4,6 +4,7 @@ static mode_t* globalVar_mode;
 static motion_t* globalVar_motion;
 static BreakDown globalVar_BkDnVar;
 static Floor globalVar_Floor;
+static bool globalVar_DoorStatus;   
 
 void setMode(mode_t* mode)
 {
@@ -28,6 +29,11 @@ void setFloor(int* TF, int* CF)
     globalVar_Floor.TF = *TF;
 }
 
+void setDoorStatus(bool *doorStatus)
+{
+    globalVar_DoorStatus = *doorStatus;
+}
+
 mode_t getMode(void)
 {
     return(*globalVar_mode);
@@ -46,4 +52,9 @@ BreakDown getBkDn(void)
 Floor getFloor(void)
 {
     return(globalVar_Floor);
+}
+
+bool getDoorStatus(void)
+{
+    return(globalVar_DoorStatus);
 }

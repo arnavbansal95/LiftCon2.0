@@ -15,6 +15,7 @@ static mode_t       dispVar_mode;
 static motion_t     dispVar_motion;
 static BreakDown    dispVar_BkDn;
 static Floor        dispVar_Floor;
+static bool         dispVar_doorStatus;
 
 void InitLCD(void);                             // Initialize LCD
 void Display(void);                             // Main Display Function 

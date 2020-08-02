@@ -53,7 +53,8 @@ bool CriticalCheck(void)
             Serial.println("     Critical Check: Failed    ");
             taskVar_Critical = false;
             digitalWrite(OUTPUT2_UPM, !taskVar_CriticalRes);
-            digitalWrite(OUTPUT2_DNM, !taskVar_CriticalRes);    
+            digitalWrite(OUTPUT2_DNM, !taskVar_CriticalRes);
+            WriteTime();    
         }
         digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
     }
@@ -135,18 +136,20 @@ void CheckInterrupt(void)
 bool DoorCheck(void)
 {
     static uint8_t taskVar_DoorLimitStatus;
+    static bool doorStatus;
     taskVar_DoorLimitStatus = ReadInput(INPUT_DLS); 
     digitalWrite(OUTPUT2_DIN, taskVar_DoorLimitStatus);
     if(taskVar_DoorLimitStatus == LOW)
     {
-        return(true);
+        doorStatus = true;
     }
     else
     {
         Serial.println("        Door Open: Error       ");
-        return(false);
+        doorStatus = false;
     }
-    
+    setDoorStatus(&doorStatus);
+    return(doorStatus);
 }
 
 int GetTargetFloor(void)

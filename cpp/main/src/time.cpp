@@ -22,6 +22,10 @@ void InitTime(void)
     else
     {
         GetTime();
+        Serial.print("ElapsedTime till now: ");
+        Serial.print(elapsedDays);
+        Serial.print(":");
+        Serial.println(elapsedHours);
     }
     
 }
@@ -40,13 +44,11 @@ void SetTime(void)
     {
         elapsedHours += elapsedMins / 60;
         elapsedMins = 0;
-        WriteTime();
     }
     if(elapsedHours % 24 == 0)
     {
         elapsedDays += elapsedHours / 24;
         elapsedHours = 0;
-        WriteTime();
     }
 }
 
