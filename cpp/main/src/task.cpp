@@ -144,7 +144,6 @@ bool DoorCheck(void)
     else
     {
         Serial.println("        Door Open: Error       ");
-        //taskVar_motorMotion = HALT;
         return(false);
     }
     
@@ -286,7 +285,7 @@ void LiftOperation(void)
                 {
                     taskVar_motorMotion = IDLE;
                 }
-                if(CF < 0)
+                if((CF < 0) || (!DC))
                 {
                     Serial.println("    Undefined State");
                     taskVar_motorMode = WAITING;
