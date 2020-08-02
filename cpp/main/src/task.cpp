@@ -253,18 +253,21 @@ void LiftOperation(void)
         {
             if(taskVar_DoorLimitStatus_LFTOP)
             {
-                if(!DoorCheck() && !CriticalCheck())
+                static bool DC, CC;
+                DC = DoorCheck();
+                CC = CriticalCheck();
+                Serial.println(!DC && !CC);
+                if(!DC && !CC)
                 {
-                    Serial.println(!DoorCheck() && !CriticalCheck());
                     taskVar_motorMotion = HALT;
                     OutputMotion(taskVar_motorMotion, taskVar_mode);
                 }
-                if(DoorCheck() && CriticalCheck() && (ReadInput(INPUT_FL0) == LOW))
+                if(DC && CC && (ReadInput(INPUT_FL0) == LOW))
                 {
                     taskVar_motorMotion = DOWN;
                     OutputMotion(taskVar_motorMotion, taskVar_mode);
                 }
-                if(DoorCheck() && CriticalCheck() && (ReadInput(INPUT_FL0) == HIGH))
+                if(DC && CC && (ReadInput(INPUT_FL0) == HIGH))
                 {
                     digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
                     Serial.println("     Service Mode Activated    ");
