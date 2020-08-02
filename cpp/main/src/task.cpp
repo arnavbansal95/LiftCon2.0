@@ -218,8 +218,6 @@ int  GetCurrentFloor(void)
 
 void LiftOperation(void)
 {
-    static bool taskVar_DoorLimitStatus_LFTOP;
-    taskVar_DoorLimitStatus_LFTOP = DoorCheck();
     if(taskVar_Critical)
     {
         // Maintenance Mode
@@ -251,28 +249,25 @@ void LiftOperation(void)
         // Reset Mode
         if(taskVar_mode == RESET)   
         {
-            if(taskVar_DoorLimitStatus_LFTOP)
+            static bool DC, CC;
+            DC = DoorCheck();
+            CC = CriticalCheck();
+            Serial.println(!DC && !CC);
+            if(!DC && !CC)
             {
-                static bool DC, CC;
-                DC = DoorCheck();
-                CC = CriticalCheck();
-                Serial.println(!DC && !CC);
-                if(!DC && !CC)
-                {
-                    taskVar_motorMotion = HALT;
-                    OutputMotion(taskVar_motorMotion, taskVar_mode);
-                }
-                if(DC && CC && (ReadInput(INPUT_FL0) == LOW))
-                {
-                    taskVar_motorMotion = DOWN;
-                    OutputMotion(taskVar_motorMotion, taskVar_mode);
-                }
-                if(DC && CC && (ReadInput(INPUT_FL0) == HIGH))
-                {
-                    digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
-                    Serial.println("     Service Mode Activated    ");
-                    taskVar_mode = SERVICE; 
-                }
+                taskVar_motorMotion = HALT;
+                OutputMotion(taskVar_motorMotion, taskVar_mode);
+            }
+            if(DC && CC && (ReadInput(INPUT_FL0) == LOW))
+            {
+                taskVar_motorMotion = DOWN;
+                OutputMotion(taskVar_motorMotion, taskVar_mode);
+            }
+            if(DC && CC && (ReadInput(INPUT_FL0) == HIGH))
+            {
+                digitalWrite(OUTPUT2_DNM, !ReadInput(INPUT_FL0));
+                Serial.println("     Service Mode Activated    ");
+                taskVar_mode = SERVICE; 
             }
         }
         if(taskVar_mode == SERVICE)   
