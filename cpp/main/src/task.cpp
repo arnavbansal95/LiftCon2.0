@@ -255,6 +255,7 @@ void LiftOperation(void)
             {
                 if(!DoorCheck() && !CriticalCheck())
                 {
+                    Serial.println(!DoorCheck() && !CriticalCheck());
                     taskVar_motorMotion = HALT;
                     OutputMotion(taskVar_motorMotion, taskVar_mode);
                 }
