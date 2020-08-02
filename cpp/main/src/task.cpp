@@ -252,8 +252,7 @@ void LiftOperation(void)
             static bool DC, CC;
             DC = DoorCheck();
             CC = CriticalCheck();
-            Serial.println(!DC && !CC);
-            if(!DC && !CC)
+            if(!(DC && CC))
             {
                 taskVar_motorMotion = HALT;
                 OutputMotion(taskVar_motorMotion, taskVar_mode);
