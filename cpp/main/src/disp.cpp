@@ -108,13 +108,24 @@ void Motion(motion_t dir)
 
 void StartupScreen(void)
 {
-    BasicFrameNoLine();
-    u8g.setFont(u8g_font_helvB10);
-    u8g.drawStr(4, 15, "Lift Controller 2.0");
-    u8g.setFont(u8g_font_courR08);
-    u8g.drawStr(4, 32, "For Assistance:");
-    u8g.drawStr(4, 44, "Sharad Bansal");
-    u8g.drawStr(4, 56, "+91-9958586960");
+    #if DEMO_MODE == 1
+        BasicFrame();
+        u8g.setFont(u8g_font_helvB10);
+        u8g.drawStr(15, 15, " Demo Mode     ");
+        Motion(HALT);
+        u8g.setFont(u8g_font_04b_03);
+        u8g.drawStr(4, 32, "Warning: This is");
+        u8g.drawStr(4, 44, " Demonstration");
+        u8g.drawStr(4, 56, " Purposes only!");
+    #else
+        BasicFrameNoLine();
+        u8g.setFont(u8g_font_helvB10);
+        u8g.drawStr(4, 15, "Lift Controller 2.0");
+        u8g.setFont(u8g_font_courR08);
+        u8g.drawStr(4, 32, "For Assistance:");
+        u8g.drawStr(4, 44, "Sharad Bansal");
+        u8g.drawStr(4, 56, "+91-9958586960");
+    #endif
 }
 
 void ServiceMode(void)
@@ -130,6 +141,7 @@ void ServiceMode(void)
         strcpy(ch, "Floor Status: --");
         if(dispVar_Floor.CF < 10)
         {
+            ch[14] = '0';
             ch[15] = (dispVar_Floor.CF) + '0';
         }
         else
@@ -159,6 +171,7 @@ void ServiceMode(void)
         strcpy(ch, "Target Floor: --");
         if(dispVar_Floor.TF < 10)
         {
+            ch[14] = '0';
             ch[15] = (dispVar_Floor.TF) + '0';
         }
         else
@@ -188,6 +201,7 @@ void MaintenanceMode(void)
         strcpy(ch, "Floor Status: --");
         if(dispVar_Floor.CF < 10)
         {
+            ch[14] = '0';
             ch[15] = (dispVar_Floor.CF) + '0';
         }
         else
@@ -247,6 +261,7 @@ void ResetMode(void)
         strcpy(ch, "Floor Status: --");
         if(dispVar_Floor.CF < 10)
         {
+            ch[14] = '0';
             ch[15] = (dispVar_Floor.CF) + '0';
         }
         else

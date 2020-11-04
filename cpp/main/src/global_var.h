@@ -3,6 +3,8 @@
 #ifndef GLOBAL_VAR_H_
 #define GLOBAL_VAR_H_
 
+#define DEMO_MODE   1           // 0 - Disengaged, 1 - engaged
+
 typedef enum
 {
     SERVICE,
