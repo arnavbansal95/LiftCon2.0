@@ -17,15 +17,16 @@ static BreakDown    dispVar_BkDn;
 static Floor        dispVar_Floor;
 static bool         dispVar_doorStatus;
 
-void InitLCD(void);                             // Initialize LCD
-void Display(void);                             // Main Display Function 
-void BasicFrame(void);                          // Line Frame
-void BasicFrameNoLine(void);                    // Line Frame, No Separator
-void Motion(motion_t dir);                      // Motion Function
-void ServiceMode(void);                         // Service Mode Loop
-void MaintenanceMode(void);                     // Maintenance Mode Loop
-void BreakdownMode(void);                       // Breakdown Mode Loop
-void ResetMode(void);                           // Reset Mode Loop
-void StartupScreen(void);                       // Startup Screen Loop
+void InitLCD(void);                                 // Initialize LCD
+void Display(void);                                 // Main Display Function 
+void BasicFrame(void);                              // Line Frame
+void BasicFrameNoLine(void);                        // Line Frame, No Separator
+void Motion(motion_t dir);                          // Motion Function
+void ServiceMode(void);                             // Service Mode Loop
+void MaintenanceMode(void);                         // Maintenance Mode Loop
+void BreakdownMode(void);                           // Breakdown Mode Loop
+void ResetMode(void);                               // Reset Mode Loop
+void ShutdownMode(void);                            // Shutdown Mode Loop
+void StartupScreen(void);                           // Startup Screen Loop
 
 #endif

@@ -59,6 +59,15 @@ void Display(void)
         } while(u8g.nextPage());
         delay(delayVar);
     }
+    if(dispVar_mode == SHUTDOWN)
+    {
+        u8g.firstPage();  
+        do 
+        {
+            ShutdownMode();
+        } while(u8g.nextPage());
+        delay(delayVar);
+    }
 }
 
 void BasicFrameNoLine(void)
@@ -349,4 +358,22 @@ void BreakdownMode(void)
         strcpy(ch, "VSP: FLT");
         u8g.drawStr(4, 56, ch);
     }
+}
+
+void ShutdownMode(void)
+{
+    static char ch[18];
+    BasicFrame();
+    u8g.setFont(u8g_font_helvB10);
+    u8g.drawStr(10, 15, "Critical Error:");
+    if(dispVar_mode == SHUTDOWN)
+    {
+        strcpy(ch, "5");
+        u8g.drawStr(108, 16, ch);
+    }
+    Motion(HALT);
+    u8g.setFont(u8g_font_04b_03);
+    u8g.drawStr(4, 32, "Warning: Critical");
+    u8g.drawStr(4, 44, "Error: Please call");
+    u8g.drawStr(4, 56, "For Assistance!");
 }

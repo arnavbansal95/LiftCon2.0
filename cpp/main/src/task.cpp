@@ -23,23 +23,37 @@ bool CriticalCheck(void)
     setMode(&taskVar_mode);              // Display Method
     setMotion(&taskVar_motorMotion);     // Display Method
     setBkDn(taskVar_BkDnVar);            // Display Method
-    if(taskVar_mode == STARTUP)
+    if((taskVar_mode == STARTUP) || (taskVar_mode == SHUTDOWN))
     {
-        if(taskVar_CriticalRes == LOW)
+        CheckShutDown(&taskVar_mode);
+        if(taskVar_mode == SHUTDOWN)
         {
-            Serial.println(" Inital Critical Check: Passed ");
-            Serial.println("     Service Mode Activated    ");
-            taskVar_mode = SERVICE;
-            taskVar_Critical = true;
-        }
-        if(taskVar_CriticalRes == HIGH)
-        {
-            Serial.println(" Inital Critical Check: Failed ");
+            setMode(&taskVar_mode);              // Display Method
+            Serial.print(" Critical Error Encountered:  ");
+            Serial.println((uint8_t)taskVar_mode);
             taskVar_Critical = false;
-            digitalWrite(OUTPUT2_UPM, !taskVar_CriticalRes);
-            digitalWrite(OUTPUT2_DNM, !taskVar_CriticalRes);
+            digitalWrite(OUTPUT2_MCN, LOW);
+            digitalWrite(OUTPUT2_UPM, LOW);
+            digitalWrite(OUTPUT2_DNM, LOW);
         }
-        digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
+        else
+        {
+            if(taskVar_CriticalRes == LOW)
+            {
+                Serial.println(" Inital Critical Check: Passed ");
+                Serial.println("     Service Mode Activated    ");
+                taskVar_mode = SERVICE;
+                taskVar_Critical = true;
+            }
+            if(taskVar_CriticalRes == HIGH)
+            {
+                Serial.println(" Inital Critical Check: Failed ");
+                taskVar_Critical = false;
+                digitalWrite(OUTPUT2_UPM, !taskVar_CriticalRes);
+                digitalWrite(OUTPUT2_DNM, !taskVar_CriticalRes);
+            }
+            digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
+        }
     }
     else
     {
@@ -58,14 +72,17 @@ bool CriticalCheck(void)
         }
         digitalWrite(OUTPUT2_MCN, !taskVar_CriticalRes);
     }
-    if((!taskVar_Critical) && (taskVar_mode != BREAKDOWN))
+    if(taskVar_mode != SHUTDOWN)
     {
-        taskVar_mode_past = taskVar_mode;
-        taskVar_mode = BREAKDOWN; 
-    }
-    if((taskVar_Critical) && (taskVar_mode == BREAKDOWN))
-    {
-        taskVar_mode = taskVar_mode_past;
+        if((!taskVar_Critical) && (taskVar_mode != BREAKDOWN))
+        {
+            taskVar_mode_past = taskVar_mode;
+            taskVar_mode = BREAKDOWN; 
+        }
+        if((taskVar_Critical) && (taskVar_mode == BREAKDOWN))
+        {
+            taskVar_mode = taskVar_mode_past;
+        }
     }
     return(taskVar_Critical);
 }
